@@ -548,6 +548,18 @@
             .nl-form { flex-direction: column; }
             section { padding: 4rem 5%; }
         }
+        @media(max-width:480px) {
+            .hero-left { padding: 80px 5% 40px; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero-desc { font-size: 0.95rem; }
+            .hero-btns { flex-direction: column; }
+            .hero-btns a { text-align: center; }
+            .section-title { font-size: 1.5rem; }
+            .nl-box { padding: 2rem 1.25rem; margin: 0 3% 3rem; border-radius: 18px; }
+            .nl-box h2 { font-size: 1.5rem; }
+            .prod-card { border-radius: 14px; }
+            .prod-body { padding: 1rem; }
+        }
     </style>
 @endpush
 
