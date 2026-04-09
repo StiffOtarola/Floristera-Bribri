@@ -15,7 +15,7 @@
             size: A4 portrait;
 
             @bottom-center {
-                content: "Floristería Bribri  •  floristeriabribri.com";
+                content: "{{ config('floristeria.nombre') }}  •  {{ str_replace(['http://', 'https://'], '', config('app.url')) }}";
                 font-family: Helvetica, Arial, sans-serif;
                 font-size: 7pt;
                 color: #aaaaaa;
@@ -715,11 +715,11 @@
                     <tr>
                         <td>
                             <span class="info-icon">&#x1F4F1;</span>
-                            <span class="info-value">+506 8463-0055</span>
+                            <span class="info-value">+{{ config('floristeria.whatsapp') }}</span>
                         </td>
                         <td>
                             <span class="info-icon">&#x1F4CD;</span>
-                            <span class="info-value">Bribri, Talamanca</span>
+                            <span class="info-value">{{ config('floristeria.direccion') }}</span>
                         </td>
                         <td>
                             <span class="info-icon">&#x1F552;</span>
@@ -730,8 +730,8 @@
             </div>
 
             <div class="cover-website">
-                <a href="https://floristeriabribri.com" style="color:rgba(255,255,255,0.3); text-decoration:none;">
-                    floristeriabribri.com
+                <a href="{{ config('app.url') }}" style="color:rgba(255,255,255,0.3); text-decoration:none;">
+                    {{ str_replace(['http://', 'https://'], '', config('app.url')) }}
                 </a>
             </div>
             <div class="cover-date">
@@ -936,8 +936,8 @@
                     <div class="cc-icon">&#x1F4F1;</div>
                     <div class="cc-label">WhatsApp</div>
                     <div class="cc-value">
-                        <a class="link-wa" href="https://wa.me/50684630055?text=Hola%2C%20vi%20el%20cat%C3%A1logo%20y%20quiero%20hacer%20un%20pedido">
-                            +506 8463-0055
+                        <a class="link-wa" href="https://wa.me/{{ config('floristeria.whatsapp') }}?text=Hola%2C%20vi%20el%20cat%C3%A1logo%20y%20quiero%20hacer%20un%20pedido">
+                            +{{ config('floristeria.whatsapp') }}
                         </a>
                     </div>
                     <div class="cc-extra">Toc&aacute; para chatear</div>
@@ -946,7 +946,7 @@
                     <div class="cc-icon">&#x1F4CD;</div>
                     <div class="cc-label">Ubicaci&oacute;n</div>
                     <div class="cc-value">
-                        <a href="https://maps.google.com/?q=Bribri+Talamanca+Costa+Rica">Bribri, Talamanca</a>
+                        <a href="{{ config('floristeria.maps_url') ?: 'https://maps.google.com/?q=' . urlencode(config('floristeria.direccion')) }}">{{ config('floristeria.direccion') }}</a>
                     </div>
                     <div class="cc-extra">Lim&oacute;n, Costa Rica</div>
                 </td>
@@ -968,7 +968,7 @@
             <a class="btn-wa" href="https://wa.me/50684630055?text=Hola%2C%20vi%20el%20cat%C3%A1logo%20y%20quiero%20hacer%20un%20pedido">
                 &#x1F4F1; &nbsp; Pedir por WhatsApp
             </a>
-            <a class="btn-web-cta" href="https://floristeriabribri.com">
+            <a class="btn-web-cta" href="{{ config('app.url') }}">
                 &#x1F310; &nbsp; Ver tienda online
             </a>
         </div>
@@ -999,7 +999,7 @@
                     <td class="ei-icon">&#x1F310;</td>
                     <td class="ei-label">Web</td>
                     <td class="ei-value">
-                        <a class="link-web" href="https://floristeriabribri.com">floristeriabribri.com</a>
+                        <a class="link-web" href="{{ config('app.url') }}">{{ str_replace(['http://', 'https://'], '', config('app.url')) }}</a>
                         &nbsp;&bull;&nbsp; Pedidos online 24/7
                     </td>
                 </tr>
@@ -1010,9 +1010,9 @@
             <div class="flower">&#x1F33A; &#x1F33B; &#x1F337;</div>
             <p>&ldquo;Cada flor que entregamos lleva un pedacito de Bribri y mucho amor costarricense&rdquo;</p>
             <div class="copy">
-                &copy; {{ date('Y') }} Floristería Bribri &nbsp;&bull;&nbsp; Todos los derechos reservados<br>
+                &copy; {{ date('Y') }} {{ config('floristeria.nombre') }} &nbsp;&bull;&nbsp; Todos los derechos reservados<br>
                 Cat&aacute;logo generado el {{ now()->translatedFormat('d/m/Y') }} &nbsp;&bull;&nbsp;
-                <a class="link-web" href="https://floristeriabribri.com">floristeriabribri.com</a>
+                <a class="link-web" href="{{ config('app.url') }}">{{ str_replace(['http://', 'https://'], '', config('app.url')) }}</a>
             </div>
         </div>
     </div>

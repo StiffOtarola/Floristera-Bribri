@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Floristería Bribri — Flores con Alma')
+@section('title', config('floristeria.nombre') . ' — ' . config('floristeria.slogan'))
 
 @push('css')
     <style>
@@ -675,19 +675,19 @@
         </div>
         <div class="map-grid">
             <div class="map-info">
-                <h3>📍 Floristería Bribri</h3>
+                <h3>📍 {{ config('floristeria.nombre') }}</h3>
                 <div class="map-detail">
                     <span>🏠</span>
-                    <div>Bribri, Talamanca<br>Limón, Costa Rica</div>
+                    <div>{{ config('floristeria.direccion') }}</div>
                 </div>
                 <div class="map-detail">
                     <span>🕐</span>
-                    <div>Lunes a Sábado: 8:00 am — 6:00 pm<br>Domingos: 9:00 am — 2:00 pm</div>
+                    <div>{{ config('floristeria.horario') }}</div>
                 </div>
                 <div class="map-detail">
                     <span>📱</span>
                     <div>WhatsApp: <a href="https://wa.me/{{ config('floristeria.whatsapp') }}"
-                            style="color:var(--verde);text-decoration:none;font-weight:500;">+506 8463-0055</a></div>
+                            style="color:var(--verde);text-decoration:none;font-weight:500;">+{{ config('floristeria.whatsapp') }}</a></div>
                 </div>
                 <div class="map-detail">
                     <span>📧</span>

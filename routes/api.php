@@ -15,6 +15,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/pedidos', [MobileApiController::class, 'pedidos']);
     Route::post('/pedidos', [MobileApiController::class, 'crearPedido']);
+    Route::post('/stock-check', [MobileApiController::class, 'validarStock']);
 
     Route::get('/user', function (Request $request) {
         return $request->user();

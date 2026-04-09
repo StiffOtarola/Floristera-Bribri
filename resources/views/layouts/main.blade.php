@@ -7,21 +7,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', config('floristeria.nombre'))</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌺</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>{{ rawurlencode(config('floristeria.emoji', '🌸')) }}</text></svg>">
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
         rel="stylesheet">
+    {!! tiendaColores() !!}
     <style>
-        :root {
-            --verde: #2A4A1E;
-            --verde-claro: #4A7A35;
-            --crema: #F8F5EE;
-            --terracota: #C4714A;
-            --rosa: #E8B4A0;
-            --texto: #1C1C1C;
-            --gris: #6B6B6B;
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
@@ -348,8 +339,8 @@
 
             {{-- ── Columna marca + redes ── --}}
             <div class="footer-brand">
-                <a href="{{ route('home') }}" class="f-logo">Floristería <span>Bribri</span></a>
-                <p>Flores frescas y arreglos únicos para cada momento especial. Con amor desde Costa Rica 🌺</p>
+                <a href="{{ route('home') }}" class="f-logo">{{ config('floristeria.nombre') }}</a>
+                <p>{{ config('floristeria.slogan') }} {{ config('floristeria.emoji') }}</p>
 
                 {{-- Íconos de redes sociales --}}
                 <div class="footer-redes">
@@ -400,7 +391,7 @@
             {{-- ── Columna contacto + redes ── --}}
             <div class="footer-col">
                 <h4>Contacto</h4>
-                <a href="https://wa.me/{{ config('floristeria.whatsapp') }}">📱 WhatsApp: +506 8463-0055</a>
+                <a href="https://wa.me/{{ config('floristeria.whatsapp') }}">📱 WhatsApp: +{{ config('floristeria.whatsapp') }}</a>
                 <a href="mailto:{{ config('floristeria.admin_email') }}">📧 {{ config('floristeria.admin_email') }}</a>
                 <a href="{{ route('registro') }}">💌 Suscribirse a novedades</a>
 
@@ -448,7 +439,7 @@
         </div>
 
         <div class="footer-bottom">
-            <p>© {{ date('Y') }} Floristería Bribri. Todos los derechos reservados.</p>
+            <p>© {{ date('Y') }} {{ config('floristeria.nombre') }}. Todos los derechos reservados.</p>
 
             <div class="footer-bottom-redes">
                 @if(config('floristeria.redes.facebook'))

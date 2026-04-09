@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Crear cuenta — Floristería Bribri')
+@section('title', 'Crear cuenta — ' . config('floristeria.nombre'))
 
 @push('css')
 <style>

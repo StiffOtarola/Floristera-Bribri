@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Mi Carrito — Floristería Bribri')
+@section('title', 'Mi Carrito — ' . config('floristeria.nombre'))
 
 @push('css')
 <style>
@@ -340,7 +340,7 @@ function enviarPedido() {
             weekday: 'long', day: 'numeric', month: 'long'
         });
 
-        let msg = '*NUEVO PEDIDO - Floristería Bribri*\n';
+        let msg = '*NUEVO PEDIDO - {{ config('floristeria.nombre') }}*\n';
         msg += 'Pedido #' + (data.numero || 'N/A') + '\n\n';
         msg += '*Cliente:* '  + nombre + '\n';
         msg += '*Teléfono:* ' + tel    + '\n';
