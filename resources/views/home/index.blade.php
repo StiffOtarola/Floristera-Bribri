@@ -694,7 +694,7 @@
                     <div><a href="mailto:{{ config('floristeria.admin_email') }}"
                             style="color:var(--verde);text-decoration:none;">{{ config('floristeria.admin_email') }}</a></div>
                 </div>
-                <a href="https://maps.app.goo.gl/LibtXFayE1mNFFhL6" target="_blank" class="map-link">
+                <a href="https://maps.app.goo.gl/t8Pd4spiUjSA6x1t9" target="_blank" class="map-link">
                     🗺️ Abrir en Google Maps
                 </a>
             </div>
