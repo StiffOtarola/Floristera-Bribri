@@ -92,7 +92,7 @@
     top: 0;
     z-index: 200;
 ">
-    <span style="color:rgba(255,255,255,0.4);">🌺 {{ config('floristeria.slogan') }}</span>
+    <span style="color:rgba(255,255,255,0.4);">{{ config('floristeria.emoji') }} {{ config('floristeria.slogan') }}</span>
 
     <div style="display:flex;align-items:center;gap:0.75rem;">
         @if($facebook)
@@ -161,7 +161,7 @@
         top: 0;
     @endif
 ">
-    <a href="{{ route('home') }}" class="nav-logo">Floristería <span>Bribri</span></a>
+    <a href="{{ route('home') }}" class="nav-logo">{{ config('floristeria.nombre') }}</a>
 
     {{-- Menú de navegación principal --}}
     <ul class="nav-links" id="navLinks">

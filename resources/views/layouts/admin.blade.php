@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('page-title', 'Admin') — Floristería Bribri</title>
+    <title>@yield('page-title', 'Admin') — {{ config('floristeria.nombre') }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌺</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>{{ rawurlencode(config('floristeria.emoji', '🌸')) }}</text></svg>">
+    {!! tiendaColores() !!}
     <style>
-        :root { --verde:#2A4A1E;--verde-claro:#4A7A35;--crema:#F8F5EE;--terracota:#C4714A;--rosa:#E8B4A0;--texto:#1C1C1C;--gris:#6B6B6B;--sidebar-w:260px; }
+        :root { --sidebar-w:260px; }
         * { margin:0;padding:0;box-sizing:border-box; }
         body { font-family:'DM Sans',sans-serif;background:#F0EDE6;color:var(--texto);display:flex;min-height:100vh; }
 
@@ -183,7 +184,7 @@
 <aside class="sidebar" id="adminSidebar">
     <button class="sb-close" id="sidebarClose">✕</button>
     <div class="sb-logo">
-        <div class="brand">Floristería <span>Bribri</span></div>
+        <div class="brand">{{ config('floristeria.nombre') }}</div>
         <div class="tag">Panel Admin</div>
     </div>
     <nav class="sb-menu">

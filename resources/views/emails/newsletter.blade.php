@@ -37,11 +37,11 @@
         {{-- Footer --}}
         <div style="background:#F8F5EE;padding:1.5rem 2rem;text-align:center;border-top:1px solid rgba(42,74,30,0.08);">
             <p style="color:#6B6B6B;font-size:0.8rem;margin:0;">
-                📍 Bribri, Talamanca, Costa Rica &nbsp;•&nbsp;
-                <a href="https://wa.me/{{ config('floristeria.whatsapp') }}" style="color:#2A4A1E;text-decoration:none;">WhatsApp: +506 8463-0055</a>
+                📍 {{ config('floristeria.direccion') }} &nbsp;•&nbsp;
+                <a href="https://wa.me/{{ config('floristeria.whatsapp') }}" style="color:#2A4A1E;text-decoration:none;">WhatsApp: +{{ config('floristeria.whatsapp') }}</a>
             </p>
             <p style="color:#999;font-size:0.75rem;margin:0.75rem 0 0;">
-                Recibís este correo porque te suscribiste a Floristería Bribri 💚
+                Recibís este correo porque te suscribiste a {{ config('floristeria.nombre') }} 💚
             </p>
         </div>
     </div>

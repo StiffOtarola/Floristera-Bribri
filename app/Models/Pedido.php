@@ -9,12 +9,13 @@ class Pedido extends Model
     protected $table = 'pedidos';
 
     protected $fillable = [
+        'user_id',
         'numero_pedido',
         'nombre_cliente',
         'telefono_cliente',
         'email_cliente',
         'tipo_entrega',
-        'fecha_retiro',        // ← nuevo
+        'fecha_retiro',        
         'direccion_envio',
         'nota',
         'items_json',
@@ -25,6 +26,7 @@ class Pedido extends Model
     ];
 
     protected $casts = [
+        'user_id'      => 'integer',
         'subtotal'     => 'float',
         'costo_envio'  => 'float',
         'total'        => 'float',
@@ -106,7 +108,7 @@ class Pedido extends Model
 
     public function getFechaRetiroFormateadaAttribute(): string
     {
-        return $this->fecha_retiro?->format('d/m/Y') ?? 'Sin fecha';
+        return $this->fecha_retiro ? $this->fecha_retiro->format('d/m/Y') : 'Sin fecha';
     }
 
     public function getEsEnvioAttribute(): bool

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Catálogo — Floristería Bribri')
+@section('title', 'Catálogo — ' . config('floristeria.nombre'))
 
 @push('css')
 <style>
@@ -54,7 +54,32 @@
 .empty { text-align:center;padding:4rem;color:var(--gris); }
 .empty .icon { font-size:4rem;margin-bottom:1rem; }
 
-@media(max-width:768px){ .cat-layout{grid-template-columns:1fr} .cat-sidebar{display:none} .header-actions{flex-direction:column;align-items:flex-start;gap:0.75rem;} }
+/* ── Botón toggle filtros (móvil) ─── */
+.filter-toggle {
+    display:none;
+    align-items:center;gap:8px;
+    background:var(--verde);color:white;
+    padding:10px 20px;border-radius:100px;
+    border:none;cursor:pointer;
+    font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;
+    margin-bottom:1rem;transition:all 0.2s;
+}
+.filter-toggle:hover { background:var(--verde-claro); }
+
+@media(max-width:768px){
+    .cat-layout { grid-template-columns:1fr; }
+    .cat-sidebar { display:none; }
+    .cat-sidebar.open { display:block; }
+    .filter-toggle { display:inline-flex; }
+    .header-actions { flex-direction:column;align-items:flex-start;gap:0.75rem; }
+    .page-header h1 { font-size:2rem; }
+}
+@media(max-width:480px){
+    .page-header { padding:2.5rem 5%; }
+    .page-header h1 { font-size:1.6rem; }
+    .prod-grid { grid-template-columns:1fr; }
+    .btn-pdf { font-size:0.8rem;padding:8px 16px; }
+}
 </style>
 @endpush
 
@@ -70,6 +95,11 @@
 </div>
 
 <div class="cat-layout">
+    {{-- Botón filtros (solo móvil) --}}
+    <button class="filter-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'✕ Cerrar filtros':'🔍 Filtros y búsqueda'">
+        🔍 Filtros y búsqueda
+    </button>
+
     {{-- SIDEBAR --}}
     <aside class="cat-sidebar">
         <div class="sb-card">

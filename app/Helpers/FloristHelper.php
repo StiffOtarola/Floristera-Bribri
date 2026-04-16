@@ -1,7 +1,7 @@
 <?php
 
 // ══════════════════════════════════════════════════════════
-// Helpers globales — Floristería Bribri
+// Helpers globales — Sistema de Tienda
 // ══════════════════════════════════════════════════════════
 
 if (!function_exists('formatPrice')) {
@@ -84,7 +84,7 @@ if (!function_exists('getCartCount')) {
 
 if (!function_exists('getCartTotal')) {
     /**
-     * Total en colones del carrito (sesión)
+     * Total en la moneda del carrito (sesión)
      */
     function getCartTotal(): float
     {
@@ -94,5 +94,50 @@ if (!function_exists('getCartTotal')) {
             fn($item) => $item['precio'] * $item['cantidad'],
             $carrito
         ));
+    }
+}
+
+if (!function_exists('tiendaColores')) {
+    /**
+     * Retorna el bloque <style> con las variables CSS del negocio.
+     * Llamar en el <head> del layout principal:
+     *   {!! tiendaColores() !!}
+     */
+    function tiendaColores(): string
+    {
+        $c = config('floristeria.colores');
+
+        return "
+        <style>
+            :root {
+                --verde:        #{$c['primario']};
+                --verde-claro:  #{$c['primario_claro']};
+                --terracota:    #{$c['acento']};
+                --rosa:         #{$c['rosa']};
+                --crema:        #{$c['fondo']};
+                --texto:        #1C1C1C;
+                --gris:         #6B6B6B;
+            }
+        </style>";
+    }
+}
+
+if (!function_exists('tiendaNombre')) {
+    /**
+     * Nombre del negocio configurado
+     */
+    function tiendaNombre(): string
+    {
+        return config('floristeria.nombre', 'Mi Tienda');
+    }
+}
+
+if (!function_exists('tiendaEmoji')) {
+    /**
+     * Emoji del negocio
+     */
+    function tiendaEmoji(): string
+    {
+        return config('floristeria.emoji', '🛒');
     }
 }

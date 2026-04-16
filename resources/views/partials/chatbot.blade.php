@@ -138,7 +138,7 @@
     <div class="cb-header">
         <div class="cb-avatar">🌺</div>
         <div class="cb-header-info">
-            <h4>Floristería Bribri</h4>
+            <h4>{{ config('floristeria.nombre') }}</h4>
             <span>Siempre lista para ayudarte 🌿</span>
         </div>
         <button class="cb-close" id="chatbotClose">✕</button>
@@ -150,6 +150,14 @@
     </div>
 </div>
 
+@php
+    $chatNombre    = addslashes(config('floristeria.nombre'));
+    $chatWhatsapp  = config('floristeria.whatsapp');
+    $chatHorario   = addslashes(config('floristeria.horario'));
+    $chatDireccion = addslashes(config('floristeria.direccion'));
+    $chatMapsUrl   = config('floristeria.maps_url');
+    $chatCostoEnvio = addslashes(formatPrice(costoEnvio()));
+@endphp
 <script>
 (function() {
     // ── Elementos ────────────────────────────────────────
@@ -165,15 +173,15 @@
     const faq = [
         {
             keys: ['horario','hora','abierto','abierta','abren','cierran','atienden','horarios'],
-            answer: '🕐 <strong>Nuestro horario:</strong><br>Lunes a Sábado: 8:00 am — 6:00 pm<br>Domingos: 9:00 am — 2:00 pm'
+            answer: '🕐 <strong>Horario:</strong><br>{!! $chatHorario !!}'
         },
         {
             keys: ['envío','envio','domicilio','llevan','entregan','entrega','delivery','costo envío','costo envio'],
-            answer: '🚗 <strong>Envío a domicilio:</strong> ₡3,000<br>Coordinamos por WhatsApp la hora y lugar.<br>🏪 <strong>Retiro en local:</strong> ¡Gratis!'
+            answer: '🚗 <strong>Envío a domicilio:</strong> {!! $chatCostoEnvio !!}<br>Coordinamos por WhatsApp la hora y lugar.<br>🏪 <strong>Retiro en local:</strong> ¡Gratis!'
         },
         {
             keys: ['ubicación','ubicacion','dirección','direccion','donde','dónde','local','tienda','mapa'],
-            answer: '📍 <strong>Estamos en Bribri, Talamanca, Limón.</strong><br><a href="https://maps.app.goo.gl/LibtXFayE1mNFFhL6" target="_blank">🗺️ Ver en Google Maps</a>'
+            answer: '📍 <strong>{!! $chatDireccion !!}</strong>{!! $chatMapsUrl ? "<br><a href=\"{$chatMapsUrl}\" target=\"_blank\">🗺️ Ver en Google Maps</a>" : "" !!}'
         },
         {
             keys: ['pago','pagar','sinpe','transferencia','efectivo','tarjeta','forma de pago'],
@@ -193,7 +201,7 @@
         },
         {
             keys: ['whatsapp','contacto','teléfono','telefono','llamar','mensaje','escribir'],
-            answer: '📱 <strong>WhatsApp:</strong> +506 8463-0055<br><a href="https://wa.me/{{ config("floristeria.whatsapp") }}" target="_blank">💬 Escribinos directo →</a>'
+            answer: '📱 <strong>WhatsApp:</strong> +{!! $chatWhatsapp !!}<br><a href="https://wa.me/{!! $chatWhatsapp !!}" target="_blank">💬 Escribinos directo →</a>'
         },
         {
             keys: ['personalizar','personalizado','especial','custom','medida','dedicatoria','tarjeta'],
@@ -205,7 +213,7 @@
         },
         {
             keys: ['hola','buenas','hey','hi','hello','buen día','buenas tardes','buenas noches'],
-            answer: '¡Hola! 🌺 Bienvenid@ a Floristería Bribri. ¿En qué te puedo ayudar hoy?'
+            answer: '¡Hola! 🌺 Bienvenid@ a {!! $chatNombre !!}. ¿En qué te puedo ayudar hoy?'
         },
         {
             keys: ['gracias','thanks','genial','perfecto','listo','ok','vale','chao','adiós','adios','bye'],
@@ -349,7 +357,7 @@
     function startChat() {
         if (started) return;
         started = true;
-        addMsg('¡Hola! 🌺 Soy la asistente de <strong>Floristería Bribri</strong>.<br>¿En qué puedo ayudarte hoy?', 'bot');
+        addMsg('¡Hola! 🌺 Soy la asistente de <strong>{!! $chatNombre !!}</strong>.<br>¿En qué puedo ayudarte hoy?', 'bot');
         setTimeout(() => {
             addMsg('Elegí una opción o escribí tu pregunta:', 'bot');
             addOptions(quickOptions);

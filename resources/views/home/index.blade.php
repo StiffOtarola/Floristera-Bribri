@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Floristería Bribri — Flores con Alma')
+@section('title', config('floristeria.nombre') . ' — ' . config('floristeria.slogan'))
 
 @push('css')
     <style>
@@ -548,6 +548,18 @@
             .nl-form { flex-direction: column; }
             section { padding: 4rem 5%; }
         }
+        @media(max-width:480px) {
+            .hero-left { padding: 80px 5% 40px; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero-desc { font-size: 0.95rem; }
+            .hero-btns { flex-direction: column; }
+            .hero-btns a { text-align: center; }
+            .section-title { font-size: 1.5rem; }
+            .nl-box { padding: 2rem 1.25rem; margin: 0 3% 3rem; border-radius: 18px; }
+            .nl-box h2 { font-size: 1.5rem; }
+            .prod-card { border-radius: 14px; }
+            .prod-body { padding: 1rem; }
+        }
     </style>
 @endpush
 
@@ -663,19 +675,19 @@
         </div>
         <div class="map-grid">
             <div class="map-info">
-                <h3>📍 Floristería Bribri</h3>
+                <h3>📍 {{ config('floristeria.nombre') }}</h3>
                 <div class="map-detail">
                     <span>🏠</span>
-                    <div>Bribri, Talamanca<br>Limón, Costa Rica</div>
+                    <div>{{ config('floristeria.direccion') }}</div>
                 </div>
                 <div class="map-detail">
                     <span>🕐</span>
-                    <div>Lunes a Sábado: 8:00 am — 6:00 pm<br>Domingos: 9:00 am — 2:00 pm</div>
+                    <div>{{ config('floristeria.horario') }}</div>
                 </div>
                 <div class="map-detail">
                     <span>📱</span>
                     <div>WhatsApp: <a href="https://wa.me/{{ config('floristeria.whatsapp') }}"
-                            style="color:var(--verde);text-decoration:none;font-weight:500;">+506 8463-0055</a></div>
+                            style="color:var(--verde);text-decoration:none;font-weight:500;">+{{ config('floristeria.whatsapp') }}</a></div>
                 </div>
                 <div class="map-detail">
                     <span>📧</span>

@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: tienda-demo
+    env: php
+    plan: free
+    buildCommand: composer install --no-dev --optimize-autoloader && npm install && npm run build
+    startCommand: vendor/bin/heroku-php-apache2 public/
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_URL
+        sync: false
+      - key: TIENDA_NOMBRE
+        value: "Demo Tienda Online"
+      - key: TIENDA_SLOGAN
+        value: "Sistema de tienda para tu negocio"
+      - key: TIENDA_EMOJI
+        value: "🛒"
+      - key: TIENDA_WHATSAPP
+        value: "50600000000"
+      - key: SESSION_DRIVER
+        value: cookie
+      - key: CACHE_STORE
+        value: file
+      - key: QUEUE_CONNECTION
+        value: sync
+  - type: pserv
+    name: tienda-db
+    env: mysql
+    plan: free
+    envVars:
+      - key: MYSQL_DATABASE
+        value: tienda_demo
