@@ -26,11 +26,19 @@ Route::get('/',             [HomeController::class, 'index'])->name('home');
 // ── RUTA DIAGNÓSTICO TEMPORAL (BORRAR DESPUÉS) ────────────
 Route::get('/debug-session', function () {
     return response()->json([
-        'session_id'   => session()->getId(),
-        'admin_check'  => Auth::guard('admin')->check(),
-        'admin_id'     => Auth::guard('admin')->id(),
-        'session_keys' => array_keys(session()->all()),
-        'sessions_db'  => DB::table('sessions')->count(),
+        'session_id'     => session()->getId(),
+        'admin_check'    => Auth::guard('admin')->check(),
+        'admin_id'       => Auth::guard('admin')->id(),
+        'session_keys'   => array_keys(session()->all()),
+        'sessions_db'    => DB::table('sessions')->count(),
+        'cookie_name'    => config('session.cookie'),
+        'session_driver' => config('session.driver'),
+        'session_secure' => config('session.secure'),
+        'session_domain' => config('session.domain'),
+        'app_name'       => config('app.name'),
+        'app_url'        => config('app.url'),
+        'cookies_recibidas' => array_keys(request()->cookies->all()),
+        'is_https'       => request()->secure(),
     ]);
 });
 Route::get('/catalogo/pdf',      [CatalogoController::class, 'pdf'])->name('catalogo.pdf');
