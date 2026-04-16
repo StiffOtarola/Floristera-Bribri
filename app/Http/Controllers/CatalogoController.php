@@ -35,6 +35,19 @@ class CatalogoController extends Controller
         return view('catalogo.index', compact('productos', 'categorias', 'catId', 'busqueda', 'catActual'));
     }
 
+    public function show($id)
+    {
+        $producto   = Producto::with('categoria')->where('activo', true)->findOrFail($id);
+        $relacionados = Producto::with('categoria')
+            ->where('activo', true)
+            ->where('id', '!=', $id)
+            ->where('categoria_id', $producto->categoria_id)
+            ->take(4)
+            ->get();
+
+        return view('catalogo.show', compact('producto', 'relacionados'));
+    }
+
     public function pdf()
     {
         $categorias = Categoria::with(['productos' => function ($q) {

@@ -22,8 +22,9 @@ use App\Http\Controllers\Admin\NewsletterController;
 // ══════════════════════════════════════════════════════════
 
 Route::get('/',             [HomeController::class, 'index'])->name('home');
-Route::get('/catalogo/pdf', [CatalogoController::class, 'pdf'])->name('catalogo.pdf');
-Route::get('/catalogo',     [CatalogoController::class, 'index'])->name('catalogo');
+Route::get('/catalogo/pdf',      [CatalogoController::class, 'pdf'])->name('catalogo.pdf');
+Route::get('/catalogo',          [CatalogoController::class, 'index'])->name('catalogo');
+Route::get('/catalogo/{id}',     [CatalogoController::class, 'show'])->name('catalogo.show');
 Route::get('/carrito',      [CarritoController::class, 'index'])->name('carrito');
 
 // ══════════════════════════════════════════════════════════

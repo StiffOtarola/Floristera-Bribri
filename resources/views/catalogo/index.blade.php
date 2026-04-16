@@ -143,20 +143,24 @@
         <div class="prod-grid">
             @foreach($productos as $p)
             <div class="prod-card">
-                <div class="prod-img">
-                    @if($p->imagen)
-                        <img src="{{ asset('storage/products/' . $p->imagen) }}" alt="{{ $p->nombre }}">
-                    @else
-                        <div class="prod-ph">💐</div>
-                    @endif
-                    @if($p->destacado)
-                        <div class="prod-badge">Destacado</div>
-                    @endif
-                </div>
-                <div class="prod-body">
-                    <div class="prod-cat">{{ $p->categoria->nombre ?? 'Flores' }}</div>
-                    <div class="prod-name">{{ $p->nombre }}</div>
-                    <div class="prod-desc">{{ $p->descripcion }}</div>
+                <a href="{{ route('catalogo.show', $p->id) }}" style="text-decoration:none;color:inherit;">
+                    <div class="prod-img">
+                        @if($p->imagen)
+                            <img src="{{ asset('storage/products/' . $p->imagen) }}" alt="{{ $p->nombre }}">
+                        @else
+                            <div class="prod-ph">💐</div>
+                        @endif
+                        @if($p->destacado)
+                            <div class="prod-badge">Destacado</div>
+                        @endif
+                    </div>
+                    <div class="prod-body">
+                        <div class="prod-cat">{{ $p->categoria->nombre ?? 'Flores' }}</div>
+                        <div class="prod-name">{{ $p->nombre }}</div>
+                        <div class="prod-desc">{{ $p->descripcion }}</div>
+                    </div>
+                </a>
+                <div class="prod-body" style="padding-top:0;">
                     <div class="prod-foot">
                         <div class="prod-price">{{ formatPrice($p->precio) }}</div>
                         <button class="btn-add" onclick="addCart({{ $p->id }},'{{ e($p->nombre) }}',{{ $p->precio }},this)">+ Agregar</button>
