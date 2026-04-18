@@ -165,7 +165,7 @@
             </form>
 
         @elseif($userLogueado)
-            <span style="font-size:0.85rem;color:var(--verde);font-weight:500;white-space:nowrap;max-width:160px;overflow:hidden;text-overflow:ellipsis;">
+            <span class="nav-username" style="font-size:0.85rem;color:var(--verde);font-weight:500;white-space:nowrap;max-width:160px;overflow:hidden;text-overflow:ellipsis;">
                 👤 {{ $userNombre }}
             </span>
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
@@ -203,5 +203,6 @@
 <style>
 @media(max-width:900px) {
     .nav-redes-mobile { display: block !important; }
+    .nav-username { display: none; }
 }
 </style>
