@@ -12,6 +12,57 @@
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
         rel="stylesheet">
     {!! tiendaColores() !!}
+    @php $temporada = temporadaActiva(); @endphp
+    @if($temporada)
+    <style>
+        :root {
+            --terracota: #{{ $temporada['colores']['terracota'] }};
+            --rosa:      #{{ $temporada['colores']['rosa'] }};
+        }
+    </style>
+    @endif
+    <style>
+        /* ── Banner de temporada ── */
+        .temporada-banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 10px 5%;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 500;
+            position: relative;
+            flex-wrap: wrap;
+        }
+        .temporada-banner a {
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .temporada-banner a:hover { border-bottom-color: white; }
+        .temporada-close {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: color 0.2s;
+        }
+        .temporada-close:hover { color: white; }
+        @media(max-width:480px) {
+            .temporada-banner { font-size: 0.78rem; padding: 8px 4%; gap: 0.75rem; }
+            .temporada-close  { right: 0.5rem; }
+        }
+    </style>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -418,6 +469,14 @@
 
 <body>
 
+    @if($temporada)
+    <div class="temporada-banner" id="temporadaBanner" style="background:{{ $temporada['banner_color'] }};">
+        <span>{{ $temporada['emoji'] }} {{ $temporada['banner'] }}</span>
+        <a href="{{ route('catalogo') }}">Ver flores →</a>
+        <button class="temporada-close" onclick="cerrarBanner()" title="Cerrar">✕</button>
+    </div>
+    @endif
+
     @include('partials.nav')
 
 
@@ -559,6 +618,11 @@
     <script>
         function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('open');
+        }
+
+        function cerrarBanner() {
+            const b = document.getElementById('temporadaBanner');
+            if (b) { b.style.height = b.offsetHeight + 'px'; b.style.overflow = 'hidden'; requestAnimationFrame(() => { b.style.transition = 'height 0.3s ease, opacity 0.3s ease'; b.style.height = '0'; b.style.opacity = '0'; setTimeout(() => b.remove(), 320); }); }
         }
 
         const _toastIcons = {

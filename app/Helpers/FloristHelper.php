@@ -122,6 +122,30 @@ if (!function_exists('tiendaColores')) {
     }
 }
 
+if (!function_exists('temporadaActiva')) {
+    /**
+     * Devuelve la temporada activa hoy, o null si no hay ninguna.
+     */
+    function temporadaActiva(): ?array
+    {
+        $hoy = now()->startOfDay();
+
+        foreach (config('temporadas', []) as $temporada) {
+            [$mesI, $diaI] = $temporada['inicio'];
+            [$mesF, $diaF] = $temporada['fin'];
+
+            $inicio = \Carbon\Carbon::createFromDate($hoy->year, $mesI, $diaI)->startOfDay();
+            $fin    = \Carbon\Carbon::createFromDate($hoy->year, $mesF, $diaF)->endOfDay();
+
+            if ($hoy->between($inicio, $fin)) {
+                return $temporada;
+            }
+        }
+
+        return null;
+    }
+}
+
 if (!function_exists('tiendaNombre')) {
     /**
      * Nombre del negocio configurado

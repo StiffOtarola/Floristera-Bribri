@@ -576,22 +576,45 @@
 @endpush
 
 @section('content')
+    @php $temporada = temporadaActiva(); @endphp
+
     {{-- ═══ HERO ═══ --}}
     <section class="hero">
         <div class="hero-left">
-            <div class="hero-tag">Flores frescas • Costa Rica</div>
-            <h1>Flores que<br>hablan por <em>ti</em></h1>
-            <p class="hero-desc">Desde Bribri al mundo, llevamos la belleza de las flores tropicales directamente a tus
-                manos. Arreglos únicos para cada momento especial.</p>
+            <div class="hero-tag">
+                @if($temporada)
+                    {{ $temporada['nombre'] }} • {{ $temporada['flor'] }}
+                @else
+                    Flores frescas • Costa Rica
+                @endif
+            </div>
+            <h1>
+                @if($temporada)
+                    {!! $temporada['hero_titulo'] !!}
+                @else
+                    Flores que<br>hablan por <em>ti</em>
+                @endif
+            </h1>
+            <p class="hero-desc">
+                @if($temporada)
+                    {{ $temporada['hero_desc'] }}
+                @else
+                    Desde Bribri al mundo, llevamos la belleza de las flores tropicales directamente a tus manos. Arreglos únicos para cada momento especial.
+                @endif
+            </p>
             <div class="hero-btns">
-                <a href="{{ route('catalogo') }}" class="btn-primary">Ver Catálogo</a>
+                <a href="{{ route('catalogo') }}" class="btn-primary">
+                    @if($temporada) Ver {{ $temporada['flor'] }} @else Ver Catálogo @endif
+                </a>
                 <a href="#entrega" class="btn-sec">¿Cómo recibir?</a>
             </div>
         </div>
         <div class="hero-right">
             <div class="hero-pattern"></div>
-            <div class="hero-flor">💐</div>
-            <p style="color:rgba(255,255,255,0.4);font-size:0.85rem;">Flores de temporada</p>
+            <div class="hero-flor">{{ $temporada ? $temporada['emoji'] : '💐' }}</div>
+            <p style="color:rgba(255,255,255,0.4);font-size:0.85rem;">
+                @if($temporada) {{ $temporada['nombre'] }} @else Flores de temporada @endif
+            </p>
         </div>
     </section>
 
