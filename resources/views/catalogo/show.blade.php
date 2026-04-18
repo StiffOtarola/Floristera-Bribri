@@ -60,7 +60,18 @@
     .rel-grid { grid-template-columns:repeat(2,1fr); }
 }
 @media(max-width:480px){
+    .producto-wrap { gap:1.5rem;margin:1rem auto; }
+    .prod-title { font-size:1.5rem; }
+    .prod-precio { font-size:1.5rem; }
     .rel-grid { grid-template-columns:1fr; }
+    .relacionados { margin:1.5rem auto; }
+}
+@media(max-width:360px){
+    .producto-wrap { padding:0 4%; }
+    .prod-title { font-size:1.35rem; }
+    .btn-agregar,.btn-wa { padding:13px; font-size:0.9rem; }
+    .qty-btn { width:34px;height:34px; }
+    .qty-num { width:36px; }
 }
 </style>
 @endpush

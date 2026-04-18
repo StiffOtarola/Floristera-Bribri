@@ -66,6 +66,9 @@
 }
 .filter-toggle:hover { background:var(--verde-claro); }
 
+@media(max-width:1024px){
+    .cat-layout { grid-template-columns:220px 1fr; }
+}
 @media(max-width:768px){
     .cat-layout { grid-template-columns:1fr; }
     .cat-sidebar { display:none; }
@@ -79,6 +82,11 @@
     .page-header h1 { font-size:1.6rem; }
     .prod-grid { grid-template-columns:1fr; }
     .btn-pdf { font-size:0.8rem;padding:8px 16px; }
+}
+@media(max-width:360px){
+    .page-header { padding:2rem 4%; }
+    .page-header h1 { font-size:1.4rem; }
+    .cat-layout { padding:1.5rem 4%; }
 }
 </style>
 @endpush

@@ -30,10 +30,19 @@
 .auth-links a { color:var(--gris);font-size:0.875rem;text-decoration:none; }
 .auth-links a:hover { color:var(--verde); }
 .auth-links a.main-link { color:var(--verde);font-weight:500; }
+@media(max-width:480px){
+    .auth-wrap { padding:2rem 4%; }
+    .auth-card { padding:2.5rem 1.75rem; }
+}
 @media(max-width:400px){
     .perks { grid-template-columns:1fr; }
     .auth-card { padding:2rem 1.5rem;border-radius:20px; }
     .auth-card h1 { font-size:1.6rem; }
+}
+@media(max-width:360px){
+    .auth-wrap { padding:1.5rem 3%; }
+    .auth-card { padding:1.75rem 1.25rem;border-radius:16px; }
+    .btn-submit { font-size:0.9rem; }
 }
 </style>
 @endpush

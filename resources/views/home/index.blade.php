@@ -543,10 +543,14 @@
             .stats-bar { grid-template-columns: 1fr; }
             .stat { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
             .entrega-grid { grid-template-columns: 1fr; }
+            .entrega-item { padding: 2rem; }
             .entrega-item:first-child { border-right: none; border-bottom: 1px solid rgba(42, 74, 30, 0.08); }
             .nl-box { padding: 3rem 1.5rem; margin: 0 5% 4rem; }
             .nl-form { flex-direction: column; }
             section { padding: 4rem 5%; }
+            .map-section { padding: 3rem 5%; }
+            .map-info { padding: 2rem; }
+            .section-header { margin-bottom: 2.5rem; }
         }
         @media(max-width:480px) {
             .hero-left { padding: 80px 5% 40px; }
@@ -559,6 +563,14 @@
             .nl-box h2 { font-size: 1.5rem; }
             .prod-card { border-radius: 14px; }
             .prod-body { padding: 1rem; }
+            .entrega-item { padding: 1.5rem 1.25rem; }
+        }
+        @media(max-width:360px) {
+            .hero-left { padding: 70px 4% 30px; }
+            .hero-btns { gap: 0.75rem; }
+            .nl-box { margin: 0 0 3rem; border-radius: 0; }
+            section { padding: 3rem 4%; }
+            .map-section { padding: 2.5rem 4%; }
         }
     </style>
 @endpush

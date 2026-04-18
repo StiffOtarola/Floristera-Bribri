@@ -75,19 +75,26 @@
 .btn-cancelar { display:block;text-align:center;color:var(--gris);font-size:0.875rem;margin-top:1rem;cursor:pointer; }
 #envioFields { display:none; }
 
-@media(max-width:768px){ .cart-layout{grid-template-columns:1fr} }
-@media(max-width:480px){
+@media(max-width:1024px){
+    .cart-layout { grid-template-columns:1fr; }
+    .summary { position:static; }
+}
+@media(max-width:768px){
     .page-wrap { padding:0 4%; }
     .page-wrap > h1 { font-size:2rem; }
-    .cart-item { flex-wrap:wrap;gap:0.75rem;padding:1rem; }
+}
+@media(max-width:480px){
+    .page-wrap { padding:0 3%; }
+    .page-wrap > h1 { font-size:1.7rem;margin-bottom:1.25rem; }
+    .cart-item { flex-wrap:wrap;gap:0.75rem;padding:1rem;position:relative;padding-right:2.5rem; }
     .item-img { width:60px;height:60px; }
     .item-sub { width:100%;text-align:left;border-top:1px solid rgba(42,74,30,0.06);padding-top:0.5rem;margin-top:0.25rem; }
     .btn-del { position:absolute;top:1rem;right:1rem; }
-    .cart-item { position:relative;padding-right:2.5rem; }
     .tipo-grid { grid-template-columns:1fr; }
     .modal { padding:1.5rem;border-radius:18px; }
     .modal h2 { font-size:1.5rem; }
     .summary { padding:1.5rem;border-radius:16px; }
+    .btn-checkout { padding:14px; }
 }
 </style>
 @endpush
