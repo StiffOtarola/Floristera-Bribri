@@ -12,21 +12,21 @@ class EliminarPedidosVencidos extends Command
 
     public function handle(): int
     {
-        // Buscar pedidos con fecha_retiro anterior a hoy
-        // Ejemplo: si fecha_retiro = 2026-02-23, se borra el 2026-02-24 o después
-        /** @var \Illuminate\Database\Eloquent\Collection<int, Pedido> $pedidos */
-        $pedidos = Pedido::vencidos()->get();
+        // Solo borra pedidos ENTREGADOS o CANCELADOS con más de 30 días
+        // Los pedidos activos (pendiente, confirmado, en_proceso, listo) nunca se borran
+        $pedidos = Pedido::whereIn('estado', ['entregado', 'cancelado'])
+            ->where('creado_en', '<', now()->subDays(15))
+            ->get();
 
         if ($pedidos->isEmpty()) {
-            $this->info('No hay pedidos vencidos para eliminar.');
+            $this->info('No hay pedidos antiguos para eliminar.');
             return self::SUCCESS;
         }
 
         $total = $pedidos->count();
 
-        /** @var Pedido $pedido */
         foreach ($pedidos as $pedido) {
-            $this->line("  → Eliminando #{$pedido->numero_pedido} (retiro: {$pedido->fecha_retiro_formateada})");
+            $this->line("  → Eliminando #{$pedido->numero_pedido} ({$pedido->estado} — {$pedido->fecha_formateada})");
             $pedido->delete();
         }
 
