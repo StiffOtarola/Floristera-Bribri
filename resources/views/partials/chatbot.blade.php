@@ -308,7 +308,7 @@
             botReply('¡Perfecto! Te redirijo a nuestro WhatsApp para atención personalizada 💬', false);
             setTimeout(() => {
                 window.open('https://wa.me/{{ config("floristeria.whatsapp") }}?text=' +
-                    encodeURIComponent('¡Hola! 🌺 Vengo del chatbot de la web y necesito ayuda.'), '_blank');
+                    encodeURIComponent('Hola! Vengo del sitio web de Floristeria Bribri y necesito ayuda.'), '_blank');
             }, 1200);
             return;
         }
@@ -343,11 +343,11 @@
             botReply(answer);
         } else {
             // No encontró — ofrecer WhatsApp
+            const waText = encodeURIComponent('Hola! Tengo una consulta: ' + text);
             botReply(
-                '🤔 No estoy segura de entender tu pregunta, pero no te preocupes.<br>' +
-                'Podés <a href="https://wa.me/{{ config("floristeria.whatsapp") }}?text=' +
-                encodeURIComponent('Hola! Tengo una consulta: ' + text) +
-                '" target="_blank"><strong>escribirnos por WhatsApp</strong></a> y te ayudamos personalmente 💬',
+                'No estoy segura de entender tu pregunta, pero no te preocupes.<br>' +
+                'Podes <a href="https://wa.me/{{ config("floristeria.whatsapp") }}?text=' + waText +
+                '" target="_blank"><strong>escribirnos por WhatsApp</strong></a> y te ayudamos personalmente.',
                 true
             );
         }
