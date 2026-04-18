@@ -24,6 +24,9 @@ return Application::configure(basePath: dirname(__DIR__))
                      Request::HEADER_X_FORWARDED_AWS_ELB
         );
 
+        // ── Headers de seguridad HTTP (global) ───────────
+        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
+
         // ── Aliases de middleware ─────────────────────────
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
