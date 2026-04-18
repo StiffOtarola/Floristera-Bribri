@@ -275,22 +275,116 @@
             70%       { box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4), 0 0 0 12px rgba(37, 211, 102, 0); }
         }
 
-        .toast {
+        /* ══════════════════════════════════════════
+           SISTEMA DE ALERTAS / TOASTS
+           ══════════════════════════════════════════ */
+        .toast-container {
             position: fixed;
-            bottom: 6rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: var(--verde);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 100px;
-            font-size: 0.9rem;
-            opacity: 0;
-            transition: all 0.3s;
+            bottom: 1.5rem;
+            right: 1.5rem;
             z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
             pointer-events: none;
         }
-        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: white;
+            border-radius: 14px;
+            padding: 14px 16px;
+            min-width: 280px;
+            max-width: 360px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            border-left: 4px solid var(--verde);
+            pointer-events: all;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .toast.show { opacity: 1; transform: translateX(0); }
+        .toast.hide { opacity: 0; transform: translateX(30px); }
+
+        /* Tipos */
+        .toast-success { border-left-color: #2A4A1E; }
+        .toast-error   { border-left-color: #C0392B; }
+        .toast-warning { border-left-color: #C4714A; }
+        .toast-info    { border-left-color: #4A7A35; }
+
+        /* Ícono */
+        .toast-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 1px;
+        }
+        .toast-success .toast-icon { background: #2A4A1E; color: white; }
+        .toast-error   .toast-icon { background: #C0392B; color: white; }
+        .toast-warning .toast-icon { background: #C4714A; color: white; }
+        .toast-info    .toast-icon { background: #4A7A35; color: white; }
+
+        /* Texto */
+        .toast-body { flex: 1; }
+        .toast-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1C1C1C;
+            line-height: 1.3;
+            margin-bottom: 2px;
+        }
+        .toast-msg {
+            font-size: 0.82rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Botón cerrar */
+        .toast-close {
+            background: none;
+            border: none;
+            color: #bbb;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+            padding: 0;
+            flex-shrink: 0;
+            transition: color 0.2s;
+        }
+        .toast-close:hover { color: #666; }
+
+        /* Barra de progreso */
+        .toast-progress {
+            position: absolute;
+            bottom: 0; left: 0;
+            height: 3px;
+            background: var(--verde);
+            border-radius: 0 0 14px 14px;
+            animation: toastProgress 4s linear forwards;
+        }
+        .toast-error   .toast-progress { background: #C0392B; }
+        .toast-warning .toast-progress { background: #C4714A; }
+        .toast-info    .toast-progress { background: #4A7A35; }
+
+        @keyframes toastProgress {
+            from { width: 100%; }
+            to   { width: 0%; }
+        }
+
+        @media (max-width: 480px) {
+            .toast-container { right: 1rem; left: 1rem; bottom: 5rem; }
+            .toast { min-width: 0; max-width: 100%; }
+        }
 
         @media (max-width:900px) {
             .nav-links { display: none; }
@@ -326,11 +420,6 @@
 
     @include('partials.nav')
 
-    @if(session('success'))
-        <div style="background:#d4edda;color:#155724;border:1px solid #c3e6cb;padding:12px 20px;font-size:0.875rem;text-align:center;">
-            {{ session('success') }}
-        </div>
-    @endif
 
     @yield('content')
 
@@ -465,19 +554,67 @@
         @include('partials.chatbot')
     @endif
 
-    <div class="toast" id="toast"></div>
+    <div class="toast-container" id="toastContainer"></div>
 
     <script>
         function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('open');
         }
 
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 2500);
+        const _toastIcons = {
+            success: '&#10003;',
+            error:   '&#10005;',
+            warning: '!',
+            info:    'i'
+        };
+        const _toastTitles = {
+            success: 'Listo',
+            error:   'Error',
+            warning: 'Atenci&oacute;n',
+            info:    'Informaci&oacute;n'
+        };
+
+        function showToast(msg, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast toast-' + type;
+            toast.innerHTML =
+                '<div class="toast-icon">' + (_toastIcons[type] || '&#10003;') + '</div>' +
+                '<div class="toast-body">' +
+                    '<div class="toast-title">' + (_toastTitles[type] || 'Aviso') + '</div>' +
+                    '<div class="toast-msg">' + msg + '</div>' +
+                '</div>' +
+                '<button class="toast-close" onclick="closeToast(this.parentElement)">&#10005;</button>' +
+                '<div class="toast-progress"></div>';
+
+            container.appendChild(toast);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => toast.classList.add('show'));
+            });
+
+            setTimeout(() => closeToast(toast), 4000);
         }
+
+        function closeToast(toast) {
+            if (!toast) return;
+            toast.classList.remove('show');
+            toast.classList.add('hide');
+            setTimeout(() => toast.remove(), 400);
+        }
+
+        // Mostrar flash de sesión como toast
+        @if(session('success'))
+            showToast(@json(session('success')), 'success');
+        @endif
+        @if(session('error'))
+            showToast(@json(session('error')), 'error');
+        @endif
+        @if(session('warning'))
+            showToast(@json(session('warning')), 'warning');
+        @endif
+        @if(session('info'))
+            showToast(@json(session('info')), 'info');
+        @endif
 
         @if(!Auth::guard('admin')->check() && !Auth::guard('web')->check())
         window.addEventListener('scroll', () => {
