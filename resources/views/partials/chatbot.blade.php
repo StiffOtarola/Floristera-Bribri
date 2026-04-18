@@ -305,11 +305,13 @@
 
         if (opt.action === 'whatsapp_direct') {
             addMsg('Hablar por WhatsApp', 'user');
-            botReply('¡Perfecto! Te redirijo a nuestro WhatsApp para atención personalizada 💬', false);
-            setTimeout(() => {
-                window.open('https://wa.me/{{ config("floristeria.whatsapp") }}?text=' +
-                    encodeURIComponent('Hola! Vengo del sitio web de Floristeria Bribri y necesito ayuda.'), '_blank');
-            }, 1200);
+            const waUrl = 'https://wa.me/{{ config("floristeria.whatsapp") }}?text=' +
+                encodeURIComponent('Hola! Vengo del sitio web de Floristeria Bribri y necesito ayuda.');
+            botReply(
+                '¡Perfecto! Toca el botón para abrir WhatsApp:<br>' +
+                '<a href="' + waUrl + '" target="_blank" style="display:inline-block;margin-top:10px;background:#25D366;color:white;padding:10px 20px;border-radius:100px;text-decoration:none;font-weight:600;font-size:0.9rem;">Abrir WhatsApp</a>',
+                false
+            );
             return;
         }
 
