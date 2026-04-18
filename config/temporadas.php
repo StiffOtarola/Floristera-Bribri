@@ -12,24 +12,6 @@
 
 return [
 
-    // ── PRUEBA — borrar después ──────────────────────────
-    [
-        'nombre'        => 'Prueba de Temporada',
-        'inicio'        => [4, 17],
-        'fin'           => [4, 17],
-        'flor'          => 'Rosas de Prueba',
-        'emoji'         => '🌹',
-        'banner'        => 'PRUEBA — El sistema de temporadas esta funcionando correctamente',
-        'banner_color'  => '#A93226',
-        'hero_titulo'   => 'Flores que <em>enamoran</em>',
-        'hero_desc'     => 'Esta es una prueba del sistema de temporadas. Si ves este mensaje, todo funciona correctamente.',
-        'colores'       => [
-            'terracota' => 'A93226',
-            'rosa'      => 'FADBD8',
-        ],
-    ],
-    // ────────────────────────────────────────────────────
-
     [
         'nombre'        => 'San Valentín',
         'inicio'        => [2, 7],
