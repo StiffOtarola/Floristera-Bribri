@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <style>
         /* ══════════════════════════════════════════════════
-           FLORISTERÍA BRIBRI — Catálogo PDF v3 (Boutique)
-           Compatible DomPDF: sin gradients, sin ::before/after
+           FLORISTERÍA BRIBRI — Catálogo PDF v3
+           DomPDF-safe: sin emoji, sin gradients, sin opacity bg
            ══════════════════════════════════════════════════ */
 
         @page {
@@ -39,7 +39,7 @@
         }
 
         /* ════════════════════════════════════════════
-           PORTADA — Estilo Boutique
+           PORTADA — Boutique sin emoji
            ════════════════════════════════════════════ */
         .cover-page {
             page-break-after: always;
@@ -49,35 +49,54 @@
             text-align: center;
         }
 
-        /* Bandas de acento arriba */
         .band-terracota { background: #C4714A; height: 8pt; }
         .band-verde     { background: #4A7A35; height: 3pt; }
 
         /* Marco decorativo interior */
         .cover-frame {
-            margin: 14pt 22pt 14pt;
-            border: 1pt solid rgba(255,255,255,0.14);
-            padding: 28pt 32pt 22pt;
+            margin: 14pt 24pt 14pt;
+            border: 1pt solid rgba(255,255,255,0.13);
+            padding: 26pt 30pt 20pt;
         }
 
+        /* Ornamento decorativo con guiones */
         .cover-ornament {
-            font-size: 10pt;
-            letter-spacing: 10pt;
-            color: rgba(255,255,255,0.18);
-            margin-bottom: 20pt;
+            font-size: 9pt;
+            letter-spacing: 8pt;
+            color: rgba(255,255,255,0.2);
+            margin-bottom: 22pt;
         }
 
-        .cover-flowers-big {
-            font-size: 46pt;
-            margin-bottom: 6pt;
-            line-height: 1.1;
+        /* Círculo decorativo central (reemplaza emoji) */
+        .cover-circle-wrap {
+            margin-bottom: 16pt;
+        }
+        .cover-circle {
+            display: inline-block;
+            width: 70pt;
+            height: 70pt;
+            border-radius: 50%;
+            border: 2pt solid rgba(196,113,74,0.5);
+            line-height: 70pt;
+            text-align: center;
+            font-size: 28pt;
+            font-weight: 300;
+            color: #E8B4A0;
+            letter-spacing: 0;
         }
 
-        .cover-flowers-row {
-            font-size: 14pt;
-            letter-spacing: 10pt;
-            color: rgba(255,255,255,0.4);
-            margin-bottom: 20pt;
+        /* Línea decorativa horizontal delgada */
+        .cover-thin-line {
+            width: 40pt;
+            height: 0.8pt;
+            background: rgba(196,113,74,0.5);
+            margin: 0 auto;
+        }
+        .cover-thin-line-wide {
+            width: 100%;
+            height: 0.5pt;
+            background: rgba(255,255,255,0.08);
+            margin: 14pt 0;
         }
 
         .cover-eyebrow {
@@ -85,35 +104,37 @@
             letter-spacing: 5pt;
             text-transform: uppercase;
             color: #C4714A;
-            margin-bottom: 8pt;
+            margin-bottom: 10pt;
+            margin-top: 14pt;
         }
 
         .cover-store-name {
-            font-size: 30pt;
+            font-size: 28pt;
             font-weight: 300;
             letter-spacing: 3pt;
-            color: #FFFFFF;
+            color: rgba(255,255,255,0.85);
             line-height: 1.15;
             margin-bottom: 2pt;
         }
         .cover-store-name strong {
             font-weight: 800;
             color: #E8B4A0;
-            font-size: 38pt;
+            font-size: 36pt;
             letter-spacing: 2pt;
+            display: block;
         }
 
         .cover-tagline {
-            font-size: 9.5pt;
-            color: rgba(255,255,255,0.48);
+            font-size: 9pt;
+            color: rgba(255,255,255,0.42);
             font-weight: 300;
             letter-spacing: 0.5pt;
-            margin-top: 6pt;
+            margin-top: 8pt;
             margin-bottom: 16pt;
         }
 
         .cover-divider {
-            width: 55pt;
+            width: 50pt;
             height: 1pt;
             background: #C4714A;
             margin: 0 auto 16pt;
@@ -121,19 +142,19 @@
 
         .cover-catalog-tag {
             display: inline-block;
-            border: 0.8pt solid rgba(255,255,255,0.18);
+            border: 0.8pt solid rgba(255,255,255,0.15);
             padding: 6pt 22pt;
             font-size: 7.5pt;
             letter-spacing: 2pt;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.65);
-            margin-bottom: 24pt;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 22pt;
         }
 
         /* Stats en portada */
-        .cover-stats { margin-bottom: 20pt; }
-        .cover-stats table { width: 68%; margin: 0 auto; border-collapse: collapse; }
-        .cover-stats td { padding: 6pt 14pt; text-align: center; vertical-align: top; }
+        .cover-stats { margin-bottom: 18pt; }
+        .cover-stats table { width: 72%; margin: 0 auto; border-collapse: collapse; }
+        .cover-stats td { padding: 6pt 16pt; text-align: center; vertical-align: top; }
         .cs-num {
             font-size: 26pt;
             font-weight: 700;
@@ -145,34 +166,43 @@
             font-size: 6pt;
             text-transform: uppercase;
             letter-spacing: 1.5pt;
-            color: rgba(255,255,255,0.35);
+            color: rgba(255,255,255,0.3);
             margin-top: 3pt;
             display: block;
         }
         .cs-sep { color: rgba(255,255,255,0.08); font-size: 22pt; vertical-align: middle; }
 
         /* Contacto en portada */
-        .cover-contact { border-top: 0.5pt solid rgba(255,255,255,0.1); padding-top: 14pt; margin-bottom: 16pt; }
-        .cover-contact table { width: 90%; margin: 0 auto; border-collapse: collapse; }
-        .cover-contact td { padding: 3pt 10pt; text-align: center; font-size: 8pt; color: rgba(255,255,255,0.42); }
-        .cc-icon { font-size: 11pt; display: block; margin-bottom: 2pt; }
+        .cover-contact { padding-top: 14pt; margin-bottom: 14pt; }
+        .cover-contact table { width: 92%; margin: 0 auto; border-collapse: collapse; }
+        .cover-contact td {
+            padding: 4pt 10pt;
+            text-align: center;
+            font-size: 8pt;
+            color: rgba(255,255,255,0.38);
+            vertical-align: top;
+        }
+        .cc-label {
+            font-size: 6pt;
+            text-transform: uppercase;
+            letter-spacing: 1.5pt;
+            color: rgba(255,255,255,0.22);
+            display: block;
+            margin-bottom: 2pt;
+        }
+        .cc-val { color: rgba(255,255,255,0.55); font-size: 8pt; display: block; }
 
         .cover-web {
             font-size: 7.5pt;
-            color: rgba(255,255,255,0.22);
+            color: rgba(255,255,255,0.2);
             letter-spacing: 1pt;
             margin-bottom: 4pt;
         }
         .cover-date-txt {
             font-size: 7pt;
-            color: rgba(255,255,255,0.18);
+            color: rgba(255,255,255,0.16);
             font-style: italic;
-        }
-        .cover-ornament-bot {
-            font-size: 10pt;
-            letter-spacing: 10pt;
-            color: rgba(255,255,255,0.12);
-            margin-top: 16pt;
+            margin-bottom: 16pt;
         }
 
         /* ════════════════════════════════════════════
@@ -187,7 +217,7 @@
             text-align: center;
             margin-bottom: 22pt;
             padding-bottom: 14pt;
-            border-bottom: 0.8pt solid #E8EAE0;
+            border-bottom: 0.8pt solid #E4E0D8;
         }
         .toc-header-eyebrow {
             font-size: 7pt;
@@ -210,7 +240,7 @@
 
         /* Filas del índice */
         .toc-table { width: 100%; border-collapse: collapse; }
-        .toc-table tr { border-bottom: 0.5pt solid #F4F1EB; }
+        .toc-table tr { border-bottom: 0.5pt solid #F4F0EB; }
         .toc-table td { padding: 10pt 8pt; vertical-align: middle; }
 
         .toc-circle {
@@ -226,6 +256,16 @@
             display: inline-block;
         }
         .toc-circle-col { width: 30pt; text-align: center; }
+
+        /* Cuadrado de color por categoría */
+        .toc-color-dot {
+            width: 10pt;
+            height: 10pt;
+            border-radius: 2pt;
+            display: inline-block;
+            margin-right: 8pt;
+            vertical-align: middle;
+        }
 
         .toc-cat-name { font-size: 12pt; color: #2A4A1E; font-weight: 600; }
         .toc-cat-desc { font-size: 7.5pt; color: #bbb; margin-top: 2pt; }
@@ -262,7 +302,7 @@
             font-size: 6.5pt;
             text-transform: uppercase;
             letter-spacing: 1pt;
-            color: rgba(255,255,255,0.45);
+            color: rgba(255,255,255,0.42);
             margin-top: 3pt;
             display: block;
         }
@@ -320,7 +360,7 @@
 
         .p-card {
             background: #FAFAF6;
-            border: 0.5pt solid #E4E8DF;
+            border: 0.5pt solid #E2E6DC;
             border-radius: 8pt;
             page-break-inside: avoid;
         }
@@ -337,8 +377,8 @@
         .p-card-img-wrap {
             background: #EDE8DE;
             text-align: center;
-            padding: 13pt 8pt 11pt;
-            border-bottom: 0.5pt solid #E4E8DF;
+            padding: 12pt 8pt 10pt;
+            border-bottom: 0.5pt solid #E2E6DC;
         }
         .p-card-img {
             width: 84pt;
@@ -346,9 +386,21 @@
             object-fit: cover;
             border-radius: 5pt;
         }
+
+        /* Placeholder sin emoji — caja con letra */
         .p-card-img-ph {
-            font-size: 34pt;
+            width: 84pt;
+            height: 72pt;
+            background: #DDD8CE;
+            border: 1.5pt dashed #C0BAB0;
+            border-radius: 5pt;
+            text-align: center;
             line-height: 72pt;
+            font-size: 11pt;
+            font-weight: 700;
+            color: #A89E90;
+            letter-spacing: 2pt;
+            display: inline-block;
         }
 
         /* Cuerpo de la tarjeta */
@@ -429,9 +481,9 @@
         .section-sep {
             text-align: center;
             margin: 18pt 0;
-            color: #D8D2C8;
+            color: #D0CAC0;
             font-size: 9pt;
-            letter-spacing: 10pt;
+            letter-spacing: 12pt;
         }
 
         /* ════════════════════════════════════════════
@@ -442,7 +494,7 @@
         /* Hero */
         .contact-hero { background: #2A4A1E; color: white; margin-bottom: 18pt; }
         .contact-hero-band { background: #C4714A; height: 5pt; }
-        .contact-hero-body { padding: 24pt 36pt 26pt; text-align: center; }
+        .contact-hero-body { padding: 22pt 36pt 24pt; text-align: center; }
 
         .ch-eyebrow {
             font-size: 7pt;
@@ -452,13 +504,13 @@
             margin-bottom: 8pt;
         }
         .ch-title {
-            font-size: 25pt;
+            font-size: 24pt;
             font-weight: 300;
-            line-height: 1.2;
+            line-height: 1.25;
             margin-bottom: 6pt;
         }
         .ch-title strong { color: #E8B4A0; font-weight: 800; }
-        .ch-sub { font-size: 9pt; color: rgba(255,255,255,0.5); font-weight: 300; }
+        .ch-sub { font-size: 9pt; color: rgba(255,255,255,0.48); font-weight: 300; }
 
         /* Tarjetas de contacto */
         .contact-cards-tbl {
@@ -477,7 +529,21 @@
             border-top: 3pt solid #2A4A1E;
         }
         .contact-card.primary { border-top-color: #C4714A; }
-        .cc-icon-big { font-size: 20pt; display: block; margin-bottom: 6pt; }
+
+        .cc-icon-box {
+            width: 28pt;
+            height: 28pt;
+            border-radius: 50%;
+            background: #2A4A1E;
+            color: white;
+            font-size: 10pt;
+            font-weight: 700;
+            text-align: center;
+            line-height: 28pt;
+            margin: 0 auto 7pt;
+        }
+        .cc-icon-box.terra { background: #C4714A; }
+
         .cc-lbl {
             font-size: 6.5pt;
             text-transform: uppercase;
@@ -513,7 +579,7 @@
 
         /* Tabla de info */
         .info-box {
-            border: 0.5pt solid #E4E8DF;
+            border: 0.5pt solid #E2E6DC;
             border-radius: 8pt;
             margin-bottom: 18pt;
         }
@@ -525,7 +591,19 @@
             border-bottom: 0.5pt solid #F4F2EE;
         }
         .info-tbl tr:last-child td { border-bottom: none; }
-        .it-icon { font-size: 12pt; width: 28pt; text-align: center; }
+
+        /* Cuadrado de color como reemplazo del emoji de icono */
+        .it-dot {
+            width: 8pt;
+            height: 8pt;
+            border-radius: 50%;
+            background: #2A4A1E;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .it-dot-terra { background: #C4714A; }
+
+        .it-icon { width: 26pt; text-align: center; font-size: 9pt; color: #2A4A1E; }
         .it-lbl { width: 78pt; font-size: 7.5pt; color: #bbb; text-transform: uppercase; letter-spacing: 0.8pt; }
         .it-val { color: #2A4A1E; font-weight: 600; }
 
@@ -535,8 +613,13 @@
             padding: 14pt 10pt 10pt;
             border-top: 0.5pt solid #EEE9E0;
         }
-        .fn-flowers { font-size: 14pt; letter-spacing: 8pt; margin-bottom: 8pt; }
-        .fn-quote { font-size: 9.5pt; font-style: italic; font-weight: 300; color: #2A4A1E; margin-bottom: 9pt; }
+        .fn-line {
+            width: 60pt;
+            height: 1pt;
+            background: #C4714A;
+            margin: 0 auto 10pt;
+        }
+        .fn-quote { font-size: 9.5pt; font-style: italic; font-weight: 300; color: #2A4A1E; margin-bottom: 10pt; }
         .fn-copy { font-size: 7pt; color: #ccc; }
 
         /* Helpers */
@@ -550,22 +633,26 @@
 <body>
 
 {{-- ═══════════════════════════════════════
-     PORTADA BOUTIQUE
+     PORTADA
      ═══════════════════════════════════════ --}}
 <div class="cover-page">
     <div class="band-terracota"></div>
     <div class="band-verde"></div>
 
     <div class="cover-frame">
-        <div class="cover-ornament">&#x2726; &nbsp;&nbsp;&nbsp; &#x2726; &nbsp;&nbsp;&nbsp; &#x2726;</div>
 
-        <div class="cover-flowers-big">&#x1F33A;</div>
-        <div class="cover-flowers-row">&#x1F33B; &nbsp; &#x1F337; &nbsp; &#x1F338;</div>
+        <div class="cover-ornament">- - - - - - - - - -</div>
+
+        {{-- Círculo decorativo con iniciales --}}
+        <div class="cover-circle-wrap">
+            <div class="cover-circle">FB</div>
+        </div>
 
         <div class="cover-eyebrow">Floristeria &nbsp;&bull;&nbsp; Costa Rica &nbsp;&bull;&nbsp; Talamanca</div>
 
         <div class="cover-store-name">
-            Floristeria<br><strong>Bribri</strong>
+            Floristeria
+            <strong>Bribri</strong>
         </div>
 
         <div class="cover-tagline">Flores frescas con amor, desde Bribri</div>
@@ -573,7 +660,7 @@
         <div class="cover-divider"></div>
 
         <div class="cover-catalog-tag">
-            Cat&aacute;logo {{ date('Y') }} &nbsp;&#x2022;&nbsp; {{ $totalProductos }} Productos
+            Cat&aacute;logo {{ date('Y') }} &nbsp;&bull;&nbsp; {{ $totalProductos }} Productos
         </div>
 
         <div class="cover-stats">
@@ -592,20 +679,22 @@
             </table>
         </div>
 
+        <div class="cover-thin-line-wide"></div>
+
         <div class="cover-contact">
             <table>
                 <tr>
                     <td>
-                        <span class="cc-icon">&#x1F4F1;</span>
-                        +{{ config('floristeria.whatsapp') }}
+                        <span class="cc-label">WhatsApp</span>
+                        <span class="cc-val">+{{ config('floristeria.whatsapp') }}</span>
                     </td>
                     <td>
-                        <span class="cc-icon">&#x1F4CD;</span>
-                        {{ config('floristeria.direccion') }}
+                        <span class="cc-label">Direcci&oacute;n</span>
+                        <span class="cc-val">{{ config('floristeria.direccion') }}</span>
                     </td>
                     <td>
-                        <span class="cc-icon">&#x1F552;</span>
-                        L&ndash;S: 8am &ndash; 6pm
+                        <span class="cc-label">Horario</span>
+                        <span class="cc-val">L&ndash;S: 8am &ndash; 6pm</span>
                     </td>
                 </tr>
             </table>
@@ -614,7 +703,8 @@
         <div class="cover-web">{{ str_replace(['http://', 'https://'], '', config('app.url')) }}</div>
         <div class="cover-date-txt">Actualizado &bull; {{ now()->translatedFormat('d \d\e F, Y') }}</div>
 
-        <div class="cover-ornament-bot">&#x2726; &nbsp;&nbsp;&nbsp; &#x2726; &nbsp;&nbsp;&nbsp; &#x2726;</div>
+        <div class="cover-ornament" style="margin-top:16pt; margin-bottom:0;">- - - - - - - - - -</div>
+
     </div>
 
     <div class="band-verde"></div>
@@ -626,7 +716,7 @@
      ÍNDICE DE CATEGORÍAS
      ═══════════════════════════════════════ --}}
 @php
-    $icons = ['&#x1F339;','&#x1F490;','&#x1FAB4;','&#x1F48D;','&#x1F338;','&#x1F33A;','&#x1F33B;','&#x1F337;'];
+    $catColors = ['#2A4A1E','#C4714A','#4A7A35','#8B6A3E','#3A6B55','#7A4A2A','#5A7A35','#4A5A8B'];
     $totalStock = 0;
     $totalDestacados = 0;
     foreach($categorias as $cat) {
@@ -652,7 +742,10 @@
             </td>
             <td style="padding-left:6pt;">
                 <a class="toc-link" href="#cat-{{ $cat->id }}">
-                    <div class="toc-cat-name">{!! $icons[$catIndex % count($icons)] !!} &nbsp; {{ $cat->nombre }}</div>
+                    <div class="toc-cat-name">
+                        <span class="toc-color-dot" style="background:{{ $catColors[$catIndex % count($catColors)] }};"></span>
+                        {{ $cat->nombre }}
+                    </div>
                     @if($cat->descripcion)
                         <div class="toc-cat-desc">{{ $cat->descripcion }}</div>
                     @endif
@@ -696,7 +789,7 @@
 
 
 {{-- ═══════════════════════════════════════
-     CATÁLOGO — GRID DE 2 COLUMNAS
+     CATÁLOGO — GRID 2 COLUMNAS
      ═══════════════════════════════════════ --}}
 @foreach($categorias as $catIndex => $cat)
     @if($catIndex > 0 && $catIndex % 2 === 0)
@@ -706,13 +799,10 @@
     <div class="cat-section">
         <a name="cat-{{ $cat->id }}"></a>
 
-        {{-- Encabezado de categoría con bookmark para panel PDF --}}
         <div class="cat-header cat-bookmark" data-cat="{{ $cat->nombre }}">
             <div class="cat-header-inner">
                 <div class="cat-eyebrow">Categor&iacute;a {{ str_pad($catIndex + 1, 2, '0', STR_PAD_LEFT) }}</div>
-                <div class="cat-name">
-                    {!! $icons[$catIndex % count($icons)] !!} &nbsp;<strong>{{ $cat->nombre }}</strong>
-                </div>
+                <div class="cat-name"><strong>{{ $cat->nombre }}</strong></div>
                 @if($cat->descripcion)
                     <div class="cat-desc">{{ $cat->descripcion }}</div>
                 @endif
@@ -721,7 +811,6 @@
         </div>
         <hr class="cat-rule">
 
-        {{-- Grid 2 columnas --}}
         <table class="products-2col">
             @foreach($cat->productos->chunk(2) as $pair)
             <tr>
@@ -735,28 +824,26 @@
                     <div class="p-card">
                         <div class="p-card-top {{ $p->destacado ? 'featured' : '' }}"></div>
 
-                        {{-- Imagen --}}
                         <div class="p-card-img-wrap">
                             @if($tieneImg)
                                 <img class="p-card-img" src="{{ $imgPath }}" alt="{{ $p->nombre }}">
                             @else
-                                <div class="p-card-img-ph">&#x1F33C;</div>
+                                <div class="p-card-img-ph">FLOR</div>
                             @endif
                         </div>
 
-                        {{-- Cuerpo --}}
                         <div class="p-card-body">
                             <div>
                                 @if($p->destacado)
-                                    <span class="p-badge p-badge-dest">&#x2B50; Destacado</span>
+                                    <span class="p-badge p-badge-dest">* Destacado</span>
                                 @endif
                                 @if($esNuevo)
-                                    <span class="p-badge p-badge-new">&#x2728; Nuevo</span>
+                                    <span class="p-badge p-badge-new">+ Nuevo</span>
                                 @endif
                             </div>
 
                             <div class="p-card-name">{{ $p->nombre }}</div>
-                            <div class="p-card-desc">{{ Str::limit($p->descripcion ?: 'Producto de la más alta calidad.', 88) }}</div>
+                            <div class="p-card-desc">{{ Str::limit($p->descripcion ?: 'Producto de la m&aacute;s alta calidad.', 88) }}</div>
                             <div class="p-card-cat">{{ $cat->nombre }}</div>
 
                             <div class="p-card-footer">
@@ -770,11 +857,11 @@
                                         </td>
                                         <td class="p-foot-right">
                                             @if($p->stock > 10)
-                                                <span class="p-stock stock-ok">&#x2705; Disp.</span>
+                                                <span class="p-stock stock-ok">Disponible</span>
                                             @elseif($p->stock > 0)
-                                                <span class="p-stock stock-low">&#x26A0; {{ $p->stock }} uds.</span>
+                                                <span class="p-stock stock-low">{{ $p->stock }} uds.</span>
                                             @else
-                                                <span class="p-stock stock-out">&#x274C; Agotado</span>
+                                                <span class="p-stock stock-out">Agotado</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -795,7 +882,7 @@
     </div>
 
     @if(!$loop->last)
-        <div class="section-sep">&#x2726; &nbsp; &#x2726; &nbsp; &#x2726;</div>
+        <div class="section-sep">- - - - - - -</div>
     @endif
 @endforeach
 
@@ -810,7 +897,7 @@
         <div class="contact-hero-body">
             <div class="ch-eyebrow">F l o r i s t e r &iacute; a &nbsp;&bull;&nbsp; B r i b r i</div>
             <div class="ch-title">
-                &#x1F338; &iquest;Te gust&oacute; algo?<br><strong>&iexcl;Ped&iacute; ya!</strong>
+                &iquest;Te gust&oacute; algo?<br><strong>&iexcl;Ped&iacute; ya!</strong>
             </div>
             <div class="ch-sub">Hac&eacute; tu pedido por WhatsApp, visit&aacute; nuestra tienda o compr&aacute; en la web</div>
         </div>
@@ -819,7 +906,7 @@
     <table class="contact-cards-tbl">
         <tr>
             <td class="contact-card primary">
-                <span class="cc-icon-big">&#x1F4F1;</span>
+                <div class="cc-icon-box terra">WA</div>
                 <div class="cc-lbl">WhatsApp</div>
                 <div class="cc-val">
                     <a class="link-wa" href="https://wa.me/{{ config('floristeria.whatsapp') }}?text=Hola%2C%20vi%20el%20cat%C3%A1logo%20y%20quiero%20hacer%20un%20pedido">
@@ -829,7 +916,7 @@
                 <div class="cc-sub">Toc&aacute; para chatear</div>
             </td>
             <td class="contact-card">
-                <span class="cc-icon-big">&#x1F4CD;</span>
+                <div class="cc-icon-box">UB</div>
                 <div class="cc-lbl">Ubicaci&oacute;n</div>
                 <div class="cc-val">
                     <a href="{{ config('floristeria.maps_url') ?: 'https://maps.google.com/?q=' . urlencode(config('floristeria.direccion')) }}">
@@ -839,7 +926,7 @@
                 <div class="cc-sub">Lim&oacute;n, Costa Rica</div>
             </td>
             <td class="contact-card">
-                <span class="cc-icon-big">&#x1F4E7;</span>
+                <div class="cc-icon-box">@</div>
                 <div class="cc-lbl">Correo</div>
                 <div class="cc-val" style="font-size:8pt;">
                     <a href="mailto:{{ config('floristeria.admin_email') }}">{{ config('floristeria.admin_email') }}</a>
@@ -851,37 +938,37 @@
 
     <div class="cta-row">
         <a class="btn-wa" href="https://wa.me/{{ config('floristeria.whatsapp') }}?text=Hola%2C%20vi%20el%20cat%C3%A1logo%20y%20quiero%20hacer%20un%20pedido">
-            &#x1F4F1; &nbsp; Pedir por WhatsApp
+            Pedir por WhatsApp
         </a>
         <a class="btn-store" href="{{ config('app.url') }}">
-            &#x1F310; &nbsp; Ver tienda online
+            Ver tienda online
         </a>
     </div>
 
     <div class="info-box">
         <table class="info-tbl">
             <tr>
-                <td class="it-icon">&#x1F552;</td>
+                <td class="it-icon">Hor.</td>
                 <td class="it-lbl">Horario</td>
                 <td class="it-val">Lun &ndash; S&aacute;b: 8:00 am &ndash; 6:00 pm &nbsp;&bull;&nbsp; Dom: 9:00 am &ndash; 2:00 pm</td>
             </tr>
             <tr>
-                <td class="it-icon">&#x1F697;</td>
+                <td class="it-icon">Env.</td>
                 <td class="it-lbl">Env&iacute;o</td>
                 <td class="it-val">A domicilio: &#x20A1;{{ number_format(config('floristeria.costo_envio'), 0, ',', '.') }} &nbsp;&bull;&nbsp; Retiro en local: &iexcl;Gratis!</td>
             </tr>
             <tr>
-                <td class="it-icon">&#x1F4B0;</td>
+                <td class="it-icon">Pag.</td>
                 <td class="it-lbl">Pago</td>
                 <td class="it-val">Sinpe M&oacute;vil &nbsp;&bull;&nbsp; Transferencia &nbsp;&bull;&nbsp; Efectivo</td>
             </tr>
             <tr>
-                <td class="it-icon">&#x2728;</td>
+                <td class="it-icon">Esp.</td>
                 <td class="it-lbl">Especial</td>
                 <td class="it-val">Personalizamos arreglos para bodas, cumplea&ntilde;os y eventos especiales</td>
             </tr>
             <tr>
-                <td class="it-icon">&#x1F310;</td>
+                <td class="it-icon">Web</td>
                 <td class="it-lbl">Web</td>
                 <td class="it-val">
                     <a class="link-web" href="{{ config('app.url') }}">{{ str_replace(['http://', 'https://'], '', config('app.url')) }}</a>
@@ -892,7 +979,7 @@
     </div>
 
     <div class="final-note">
-        <div class="fn-flowers">&#x1F33A; &nbsp; &#x1F33B; &nbsp; &#x1F337;</div>
+        <div class="fn-line"></div>
         <div class="fn-quote">&ldquo;Cada flor que entregamos lleva un pedacito de Bribri y mucho amor costarricense&rdquo;</div>
         <div class="fn-copy">
             &copy; {{ date('Y') }} {{ config('floristeria.nombre') }} &nbsp;&bull;&nbsp; Todos los derechos reservados<br>
