@@ -17,3 +17,8 @@ Schedule::command('pedidos:limpiar')
     ->dailyAt('00:01')          // 12:01 AM cada día
     ->withoutOverlapping()      // evita que se ejecute dos veces si tarda
     ->runInBackground();        // no bloquea otros jobs
+
+// Borra el historial de newsletters con más de 7 días
+Schedule::call(function () {
+    \App\Models\Newsletter::where('enviado_en', '<', now()->subDays(7))->delete();
+})->weekly()->sundays()->at('02:00');
