@@ -3,6 +3,15 @@
 
 @push('css')
 <style>
+    .ped-filtros { display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.25rem; }
+    .ped-filtro {
+        padding:0.4rem 1rem;border-radius:999px;font-size:0.82rem;font-family:'DM Sans',sans-serif;
+        font-weight:500;border:1.5px solid rgba(42,74,30,0.18);background:white;
+        color:var(--gris);cursor:pointer;text-decoration:none;transition:all 0.18s;
+    }
+    .ped-filtro:hover { border-color:var(--verde);color:var(--verde); }
+    .ped-filtro.activo { background:var(--verde);color:white;border-color:var(--verde); }
+
     .ped-table-desktop { display:block; }
     .ped-cards-mobile  { display:none; }
 
@@ -26,6 +35,20 @@
 @endpush
 
 @section('content')
+
+{{-- ═══ FILTROS DE ESTADO ═══ --}}
+<div class="ped-filtros">
+    <a href="{{ route('admin.pedidos.index') }}"
+       class="ped-filtro {{ !$estado ? 'activo' : '' }}">
+        Todos
+    </a>
+    @foreach(\App\Models\Pedido::ESTADOS as $key => $label)
+    <a href="{{ route('admin.pedidos.index', ['estado' => $key]) }}"
+       class="ped-filtro {{ $estado === $key ? 'activo' : '' }}">
+        {{ $label }}
+    </a>
+    @endforeach
+</div>
 
 {{-- ═══ DESKTOP: Tabla ═══ --}}
 <div class="ped-table-desktop">

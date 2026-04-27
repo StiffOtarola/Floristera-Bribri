@@ -8,12 +8,19 @@ use Illuminate\Http\Request;
 
 class PedidoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // ── #11: paginación en lugar de get() ────────────
-        $pedidos = Pedido::latest('creado_en')->paginate(20);
+        $estado = $request->query('estado');
 
-        return view('admin.pedidos.index', compact('pedidos'));
+        $query = Pedido::latest('creado_en');
+
+        if ($estado && array_key_exists($estado, Pedido::ESTADOS)) {
+            $query->where('estado', $estado);
+        }
+
+        $pedidos = $query->paginate(20)->withQueryString();
+
+        return view('admin.pedidos.index', compact('pedidos', 'estado'));
     }
 
     public function detalle($id)
