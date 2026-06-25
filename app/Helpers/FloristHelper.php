@@ -115,6 +115,7 @@ if (!function_exists('tiendaColores')) {
                 --terracota:    #{$c['acento']};
                 --rosa:         #{$c['rosa']};
                 --crema:        #{$c['fondo']};
+                --dorado:       #" . ($c['dorado'] ?? 'C9A86A') . ";
                 --texto:        #1C1C1C;
                 --gris:         #6B6B6B;
             }

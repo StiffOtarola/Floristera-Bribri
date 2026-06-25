@@ -7,7 +7,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', config('floristeria.nombre'))</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>{{ rawurlencode(config('floristeria.emoji', '🌸')) }}</text></svg>">
+    @if(file_exists(public_path('images/logo-marca.png')))
+        <link rel="icon" type="image/png" href="{{ asset('images/logo-marca.png') }}">
+    @else
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>{{ rawurlencode(config('floristeria.emoji', '🌸')) }}</text></svg>">
+    @endif
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
         rel="stylesheet">
@@ -74,13 +78,25 @@
         }
 
         .nav-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.6rem;
             font-weight: 600;
             color: var(--verde);
             text-decoration: none;
         }
-        .nav-logo span { color: var(--terracota); font-style: italic; }
+        .nav-logo-img {
+            height: 46px;
+            width: auto;
+            display: block;
+        }
+        .nav-logo-text { color: var(--verde); }
+        @media(max-width:480px) {
+            .nav-logo-text { font-size: 1.35rem; }
+            .nav-logo-img  { height: 38px; }
+        }
 
         .nav-links {
             display: flex;

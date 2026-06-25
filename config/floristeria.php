@@ -24,6 +24,7 @@ return [
         'acento'         => env('TIENDA_COLOR_ACENTO',         'C4714A'),
         'rosa'           => env('TIENDA_COLOR_ROSA',           'E8B4A0'),
         'fondo'          => env('TIENDA_COLOR_FONDO',          'F8F5EE'),
+        'dorado'         => env('TIENDA_COLOR_DORADO',         'C9A86A'),
     ],
 
     // ── Contacto ──────────────────────────────────────────

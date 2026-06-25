@@ -1,0 +1,20 @@
+LOGOS DE FLORISTERÍA BRIBRÍ
+============================
+
+Dejá aquí los archivos del logo (PNG con fondo TRANSPARENTE de preferencia).
+El sitio los detecta automáticamente; mientras no existan, usa texto/emoji.
+
+Archivos que el sitio busca por nombre exacto:
+
+  logo-marca.png   -> Solo el colibrí + corona, CUADRADO.
+                      Se usa como ícono en el navbar y como favicon.
+                      Recomendado: 512x512 px, fondo transparente.
+
+  logo.png         -> Versión a COLOR completa (corona + texto).
+                      Para hero / encabezados sobre fondo claro.
+
+  logo-blanco.png  -> Versión BLANCA del logo.
+                      Para el footer / fondos oscuros (verde).
+
+Sugerencia: exportá cada variante por separado desde el archivo del logo,
+recortada y en PNG transparente, para mejor calidad.

@@ -110,7 +110,12 @@
         top: 0;
     @endif
 ">
-    <a href="{{ route('home') }}" class="nav-logo">{{ config('floristeria.nombre') }}</a>
+    <a href="{{ route('home') }}" class="nav-logo">
+        @if(file_exists(public_path('images/logo-marca.png')))
+            <img src="{{ asset('images/logo-marca.png') }}" alt="{{ config('floristeria.nombre') }}" class="nav-logo-img">
+        @endif
+        <span class="nav-logo-text">{{ config('floristeria.nombre') }}</span>
+    </a>
 
     {{-- Menú de navegación principal --}}
     <ul class="nav-links" id="navLinks">
