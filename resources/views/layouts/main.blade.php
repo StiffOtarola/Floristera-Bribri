@@ -7,11 +7,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', config('floristeria.nombre'))</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    @if(file_exists(public_path('images/logo-marca.png')))
-        <link rel="icon" type="image/png" href="{{ asset('images/logo-marca.png') }}?v={{ filemtime(public_path('images/logo-marca.png')) }}">
-    @else
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>{{ rawurlencode(config('floristeria.emoji', '🌸')) }}</text></svg>">
-    @endif
+    @php $favV = file_exists(public_path('favicon.ico')) ? filemtime(public_path('favicon.ico')) : time(); @endphp
+    <link rel="icon" href="{{ asset('favicon.ico') }}?v={{ $favV }}" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32.png') }}?v={{ $favV }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('images/favicon-96.png') }}?v={{ $favV }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/apple-touch-icon.png') }}?v={{ $favV }}">
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
         rel="stylesheet">
