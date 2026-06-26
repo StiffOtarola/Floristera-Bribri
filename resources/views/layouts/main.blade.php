@@ -8,7 +8,7 @@
     <title>@yield('title', config('floristeria.nombre'))</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     @if(file_exists(public_path('images/logo-marca.png')))
-        <link rel="icon" type="image/png" href="{{ asset('images/logo-marca.png') }}">
+        <link rel="icon" type="image/png" href="{{ asset('images/logo-marca.png') }}?v={{ filemtime(public_path('images/logo-marca.png')) }}">
     @else
         <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>{{ rawurlencode(config('floristeria.emoji', '🌸')) }}</text></svg>">
     @endif
