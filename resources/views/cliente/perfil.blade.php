@@ -1,0 +1,60 @@
+@extends('layouts.main')
+@section('title', 'Mi perfil')
+
+@section('content')
+@include('cliente.partials.header', ['active' => 'perfil'])
+
+<div class="cuenta-wrap">
+
+    @if($errors->any())
+        <div class="c-alert c-alert-error">{{ $errors->first() }}</div>
+    @endif
+
+    {{-- ── Datos personales ── --}}
+    <div class="c-card">
+        <h2 style="margin-bottom:1.25rem;">Mis datos</h2>
+        <form method="POST" action="{{ route('cuenta.perfil.update') }}">
+            @csrf
+            @method('PUT')
+
+            <div class="c-form-group">
+                <label>Nombre</label>
+                <input type="text" name="nombre" value="{{ old('nombre', $cliente->nombre) }}" maxlength="100" required>
+            </div>
+
+            <div class="c-form-group">
+                <label>Correo electrónico</label>
+                <input type="email" value="{{ $cliente->email }}" disabled>
+                <p class="c-form-hint">El correo es tu identificador de acceso y no se puede cambiar aquí.</p>
+            </div>
+
+            <button type="submit" class="c-btn c-btn-primary">Guardar cambios</button>
+        </form>
+    </div>
+
+    {{-- ── Cambiar contraseña ── --}}
+    <div class="c-card">
+        <h2 style="margin-bottom:1.25rem;">Cambiar contraseña</h2>
+        <form method="POST" action="{{ route('cuenta.password.update') }}">
+            @csrf
+            @method('PUT')
+
+            <div class="c-form-group">
+                <label>Contraseña actual</label>
+                <input type="password" name="password_actual" placeholder="••••••••" required>
+            </div>
+            <div class="c-form-group">
+                <label>Nueva contraseña</label>
+                <input type="password" name="password" placeholder="Mínimo 8 caracteres" required>
+            </div>
+            <div class="c-form-group">
+                <label>Confirmar nueva contraseña</label>
+                <input type="password" name="password_confirmation" placeholder="Repetí la nueva contraseña" required>
+            </div>
+
+            <button type="submit" class="c-btn c-btn-primary">Actualizar contraseña</button>
+        </form>
+    </div>
+
+</div>
+@endsection

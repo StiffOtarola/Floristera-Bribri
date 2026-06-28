@@ -51,9 +51,9 @@
     top: 0;
     z-index: 200;
 ">
-    <span style="color:var(--gris);">
-        🌸 Hola, <strong style="color:var(--verde);">{{ $userNombre }}</strong>
-    </span>
+    <a href="{{ route('cuenta.index') }}" style="color:var(--gris);text-decoration:none;">
+        🌸 Hola, <strong style="color:var(--verde);">{{ $userNombre }}</strong> · <span style="text-decoration:underline;">Mi cuenta</span>
+    </a>
     <form method="POST" action="{{ route('logout') }}" style="display:inline;">
         @csrf
         <button type="submit"
@@ -122,6 +122,9 @@
         <li><a href="{{ route('home') }}">Inicio</a></li>
         <li><a href="{{ route('catalogo') }}">Catálogo</a></li>
         <li><a href="{{ route('home') }}#entrega">Envíos</a></li>
+        @if($userLogueado)
+        <li><a href="{{ route('cuenta.index') }}">Mi cuenta</a></li>
+        @endif
 
         {{-- Redes sociales en menú móvil (solo visibles cuando el menú está abierto) --}}
         @if($hayRedes)
@@ -170,9 +173,9 @@
             </form>
 
         @elseif($userLogueado)
-            <span class="nav-username" style="font-size:0.85rem;color:var(--verde);font-weight:500;white-space:nowrap;max-width:160px;overflow:hidden;text-overflow:ellipsis;">
+            <a href="{{ route('cuenta.index') }}" class="nav-username" style="font-size:0.85rem;color:var(--verde);font-weight:500;white-space:nowrap;max-width:160px;overflow:hidden;text-overflow:ellipsis;text-decoration:none;" title="Mi cuenta">
                 👤 {{ $userNombre }}
-            </span>
+            </a>
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
                 <button type="submit" class="nav-btn-ghost">Cerrar sesión</button>

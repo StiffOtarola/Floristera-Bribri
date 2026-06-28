@@ -6,6 +6,7 @@ use App\Models\Pedido;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
@@ -71,6 +72,9 @@ class CheckoutController extends Controller
         $numero     = 'BRI-' . strtoupper(substr(uniqid(), -6)) . '-' . date('Y');
 
         $pedido = Pedido::create([
+            // Si el cliente está logueado, el pedido queda enlazado a su cuenta
+            // para que lo vea en "Mi cuenta". Si es invitado, queda null.
+            'suscriptor_id'    => Auth::guard('web')->id(),
             'numero_pedido'    => $numero,
             'nombre_cliente'   => $nombre,
             'telefono_cliente' => $telefono,

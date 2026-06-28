@@ -37,6 +37,32 @@ class Suscriptor extends Authenticatable
         return '';
     }
 
+    // ── Relaciones ───────────────────────────────────────
+
+    // Pedidos enlazados directamente a este cliente.
+    public function pedidos()
+    {
+        return $this->hasMany(Pedido::class);
+    }
+
+    /**
+     * Todos los pedidos del cliente: los enlazados por suscriptor_id
+     * MÁS los hechos como invitado (sin enlazar) con el mismo email.
+     * El OR va agrupado en un closure para que al encadenar otros where()
+     * (ej. ->where('numero_pedido', ...)) no se rompa la precedencia AND/OR.
+     */
+    public function todosLosPedidos()
+    {
+        return Pedido::where(function ($q) {
+                $q->where('suscriptor_id', $this->id)
+                  ->orWhere(function ($q2) {
+                      $q2->whereNull('suscriptor_id')
+                         ->where('email_cliente', $this->email);
+                  });
+            })
+            ->orderByDesc('creado_en');
+    }
+
     // ── Accessors ────────────────────────────────────────
 
     // ¿Tiene cuenta con contraseña?

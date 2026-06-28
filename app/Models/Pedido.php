@@ -10,6 +10,7 @@ class Pedido extends Model
 
     protected $fillable = [
         'user_id',
+        'suscriptor_id',
         'numero_pedido',
         'nombre_cliente',
         'telefono_cliente',
@@ -26,7 +27,8 @@ class Pedido extends Model
     ];
 
     protected $casts = [
-        'user_id'      => 'integer',
+        'user_id'       => 'integer',
+        'suscriptor_id' => 'integer',
         'subtotal'     => 'float',
         'costo_envio'  => 'float',
         'total'        => 'float',
@@ -56,6 +58,13 @@ class Pedido extends Model
         'entregado'   => 'badge-green',
         'cancelado'   => 'badge-red',
     ];
+
+    // ── Relaciones ───────────────────────────────────────
+
+    public function suscriptor()
+    {
+        return $this->belongsTo(Suscriptor::class);
+    }
 
     // ── Scopes ───────────────────────────────────────────
 

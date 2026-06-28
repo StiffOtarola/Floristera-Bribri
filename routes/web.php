@@ -8,6 +8,7 @@ use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CuentaController;
 
 // Controladores admin
 use App\Http\Controllers\Admin\DashboardController;
@@ -44,6 +45,19 @@ Route::post('/registro',[AuthController::class, 'registro'])->middleware('thrott
 // Logout seguro con POST (evita CSRF logout)
 Route::post('/logout',       [AuthController::class, 'logout'])->name('logout');
 Route::post('/logout-admin', [AuthController::class, 'logoutAdmin'])->name('logout.admin');
+
+// ══════════════════════════════════════════════════════════
+// MI CUENTA (clientes / suscriptores — guard 'web' por defecto)
+// ══════════════════════════════════════════════════════════
+
+Route::prefix('mi-cuenta')->middleware('auth')->group(function () {
+    Route::get('/',                 [CuentaController::class, 'index'])->name('cuenta.index');
+    Route::get('/pedidos',          [CuentaController::class, 'pedidos'])->name('cuenta.pedidos');
+    Route::get('/pedidos/{numero}', [CuentaController::class, 'pedido'])->name('cuenta.pedido');
+    Route::get('/perfil',           [CuentaController::class, 'perfil'])->name('cuenta.perfil');
+    Route::put('/perfil',           [CuentaController::class, 'actualizarPerfil'])->name('cuenta.perfil.update');
+    Route::put('/password',         [CuentaController::class, 'actualizarPassword'])->name('cuenta.password.update');
+});
 
 // ══════════════════════════════════════════════════════════
 // APIs JSON (AJAX desde el frontend)
