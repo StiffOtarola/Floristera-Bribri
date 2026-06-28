@@ -34,6 +34,11 @@
             <span class="badge {{ $pedido->estado_badge }}">{{ $pedido->estado_label }}</span>
         </div>
 
+        {{-- Seguimiento del estado --}}
+        <div style="margin-bottom:1.75rem;">
+            @include('cliente.partials.seguimiento')
+        </div>
+
         <div class="c-info-grid" style="margin-bottom:1.75rem;">
             <div>
                 <div class="k">Tipo de entrega</div>
@@ -75,6 +80,11 @@
             @endif
             <div class="row grand"><span>Total</span><span>{{ $pedido->total_formateado }}</span></div>
         </div>
+
+        <form method="POST" action="{{ route('cuenta.reordenar', $pedido->numero_pedido) }}" style="margin-top:1.5rem;">
+            @csrf
+            <button type="submit" class="c-btn c-btn-primary" style="width:100%;">🛒 Volver a pedir esto</button>
+        </form>
     </div>
 </div>
 @endsection

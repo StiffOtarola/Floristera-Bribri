@@ -54,6 +54,7 @@ Route::prefix('mi-cuenta')->middleware('auth')->group(function () {
     Route::get('/',                 [CuentaController::class, 'index'])->name('cuenta.index');
     Route::get('/pedidos',          [CuentaController::class, 'pedidos'])->name('cuenta.pedidos');
     Route::get('/pedidos/{numero}', [CuentaController::class, 'pedido'])->name('cuenta.pedido');
+    Route::post('/pedidos/{numero}/reordenar', [CuentaController::class, 'reordenar'])->name('cuenta.reordenar');
     Route::get('/perfil',           [CuentaController::class, 'perfil'])->name('cuenta.perfil');
     Route::put('/perfil',           [CuentaController::class, 'actualizarPerfil'])->name('cuenta.perfil.update');
     Route::put('/password',         [CuentaController::class, 'actualizarPassword'])->name('cuenta.password.update');

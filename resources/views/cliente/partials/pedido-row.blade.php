@@ -6,5 +6,11 @@
     </div>
     <span class="badge {{ $pedido->estado_badge }}">{{ $pedido->estado_label }}</span>
     <div class="pedido-total">{{ $pedido->total_formateado }}</div>
-    <a href="{{ route('cuenta.pedido', $pedido->numero_pedido) }}" class="c-btn c-btn-ghost">Ver detalle</a>
+    <div class="pedido-actions">
+        <a href="{{ route('cuenta.pedido', $pedido->numero_pedido) }}" class="c-btn c-btn-ghost">Ver detalle</a>
+        <form method="POST" action="{{ route('cuenta.reordenar', $pedido->numero_pedido) }}">
+            @csrf
+            <button type="submit" class="c-btn c-btn-primary">🛒 Volver a pedir</button>
+        </form>
+    </div>
 </div>

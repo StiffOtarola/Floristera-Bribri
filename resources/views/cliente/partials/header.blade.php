@@ -30,6 +30,8 @@
     .pedido-num { font-weight: 600; color: var(--verde); font-size: 0.95rem; }
     .pedido-meta { font-size: 0.8rem; color: var(--gris); margin-top: 2px; }
     .pedido-total { font-weight: 600; white-space: nowrap; }
+    .pedido-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .pedido-actions form { margin: 0; }
 
     .badge { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 0.72rem; font-weight: 600; white-space: nowrap; }
     .badge-yellow { background: #FEF3C7; color: #92400E; }
@@ -65,7 +67,10 @@
         .c-stats { grid-template-columns: 1fr 1fr; }
         .cuenta-hero h1 { font-size: 1.9rem; }
         .c-info-grid { grid-template-columns: 1fr; }
-        .pedido-row .c-btn { width: 100%; text-align: center; }
+        .pedido-actions { width: 100%; }
+        .pedido-actions .c-btn,
+        .pedido-actions form,
+        .pedido-actions form .c-btn { width: 100%; text-align: center; }
     }
 </style>
 @endpush
