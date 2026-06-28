@@ -55,13 +55,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Password Reset (no se usa en este proyecto pero Laravel lo requiere)
+    | Password Reset — clientes (suscriptores) y administradores (admins)
     |--------------------------------------------------------------------------
     */
 
     'passwords' => [
         'suscriptores' => [
             'provider' => 'suscriptores',
+            'table'    => 'password_reset_tokens',
+            'expire'   => 60,
+            'throttle' => 60,
+        ],
+        'admins' => [
+            'provider' => 'admins',
             'table'    => 'password_reset_tokens',
             'expire'   => 60,
             'throttle' => 60,

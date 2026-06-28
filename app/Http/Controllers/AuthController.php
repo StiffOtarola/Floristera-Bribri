@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Suscriptor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -133,9 +134,12 @@ class AuthController extends Controller
     public function enviarReset(Request $request)
     {
         $request->validate(['email' => 'required|email']);
+        $email = $request->input('email');
 
-        // Usa el broker por defecto ('suscriptores' en config/auth.php).
-        Password::sendResetLink($request->only('email'));
+        // Si el correo pertenece a un admin, usa el broker 'admins';
+        // si no, el de clientes (suscriptores).
+        $broker = Admin::where('email', $email)->exists() ? 'admins' : 'suscriptores';
+        Password::broker($broker)->sendResetLink(['email' => $email]);
 
         // Mensaje genérico: no revela si el correo está o no registrado.
         return back()->with('success',
@@ -162,12 +166,15 @@ class AuthController extends Controller
             'password' => 'required|min:8|confirmed',
         ]);
 
-        $status = Password::reset(
+        // Mismo criterio que al enviar el enlace: admin o cliente.
+        $broker = Admin::where('email', $request->input('email'))->exists() ? 'admins' : 'suscriptores';
+
+        $status = Password::broker($broker)->reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($suscriptor, $password) {
-                // La tabla usa password_hash, no la columna estándar 'password'.
-                $suscriptor->password_hash = Hash::make($password);
-                $suscriptor->save();
+            function ($usuario, $password) {
+                // Tanto admins como suscriptores usan la columna password_hash.
+                $usuario->password_hash = Hash::make($password);
+                $usuario->save();
             }
         );
 
