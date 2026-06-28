@@ -6,6 +6,7 @@ use App\Models\Suscriptor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
@@ -118,5 +119,65 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('home');
+    }
+
+    // ══════════════════════════════════════════════════════
+    // RECUPERAR CONTRASEÑA — solicitar enlace
+    // ══════════════════════════════════════════════════════
+
+    public function recuperarForm()
+    {
+        return view('auth.recuperar');
+    }
+
+    public function enviarReset(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        // Usa el broker por defecto ('suscriptores' en config/auth.php).
+        Password::sendResetLink($request->only('email'));
+
+        // Mensaje genérico: no revela si el correo está o no registrado.
+        return back()->with('success',
+            'Si ese correo está registrado, te enviamos un enlace para restablecer tu contraseña. Revisá tu bandeja de entrada (y la carpeta de spam).');
+    }
+
+    // ══════════════════════════════════════════════════════
+    // RECUPERAR CONTRASEÑA — formulario con token
+    // ══════════════════════════════════════════════════════
+
+    public function restablecerForm(Request $request, string $token)
+    {
+        return view('auth.restablecer', [
+            'token' => $token,
+            'email' => $request->query('email'),
+        ]);
+    }
+
+    public function restablecer(Request $request)
+    {
+        $request->validate([
+            'token'    => 'required',
+            'email'    => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($suscriptor, $password) {
+                // La tabla usa password_hash, no la columna estándar 'password'.
+                $suscriptor->password_hash = Hash::make($password);
+                $suscriptor->save();
+            }
+        );
+
+        if ($status === Password::PASSWORD_RESET) {
+            return redirect()->route('login')
+                ->with('success', 'Tu contraseña fue restablecida. Ya podés iniciar sesión.');
+        }
+
+        return back()
+            ->withInput($request->only('email'))
+            ->withErrors(['email' => 'El enlace no es válido o ya expiró. Solicitá uno nuevo.']);
     }
 }

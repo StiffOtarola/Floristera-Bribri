@@ -56,5 +56,20 @@
         </form>
     </div>
 
+    {{-- ── Novedades / newsletter ── --}}
+    <div class="c-card">
+        <h2 style="margin-bottom:0.75rem;">Novedades por correo</h2>
+        <p style="color:var(--gris);font-size:0.88rem;margin-bottom:1.25rem;">Enterate de nuevas flores, promociones y fechas especiales.</p>
+        <form method="POST" action="{{ route('cuenta.newsletter.update') }}">
+            @csrf
+            @method('PUT')
+            <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:0.92rem;">
+                <input type="checkbox" name="newsletter" value="1" {{ $cliente->activo ? 'checked' : '' }} style="margin-top:3px;width:18px;height:18px;accent-color:var(--verde);flex-shrink:0;">
+                <span>Quiero recibir novedades, promociones y temporadas de {{ config('floristeria.nombre') }} en mi correo.</span>
+            </label>
+            <button type="submit" class="c-btn c-btn-primary" style="margin-top:1.25rem;">Guardar preferencia</button>
+        </form>
+    </div>
+
 </div>
 @endsection

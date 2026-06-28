@@ -172,4 +172,19 @@ class CuentaController extends Controller
 
         return back()->with('success', 'Tu contraseña fue cambiada.');
     }
+
+    // ══════════════════════════════════════════════════════
+    // PREFERENCIA DE NEWSLETTER (columna activo)
+    // ══════════════════════════════════════════════════════
+
+    public function actualizarNewsletter(Request $request)
+    {
+        $cliente = $this->cliente();
+        $cliente->activo = $request->boolean('newsletter');
+        $cliente->save();
+
+        return back()->with('success', $cliente->activo
+            ? 'Listo, vas a recibir nuestras novedades por correo. 🌸'
+            : 'Ya no recibirás correos de novedades.');
+    }
 }

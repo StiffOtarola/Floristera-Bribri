@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Suscriptor extends Authenticatable
+class Suscriptor extends Authenticatable implements CanResetPasswordContract
 {
+    use Notifiable, CanResetPassword;
+
     protected $table = 'suscriptores';
 
     protected $fillable = [
@@ -35,6 +40,12 @@ class Suscriptor extends Authenticatable
     public function getRememberTokenName(): string
     {
         return '';
+    }
+
+    // ── Auth: notificación de reset de contraseña (en español) ──
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new \App\Notifications\ResetPasswordCliente($token));
     }
 
     // ── Relaciones ───────────────────────────────────────

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Iniciar sesión')
+@section('title', 'Recuperar contraseña')
 
 @push('css')
 <style>
@@ -12,9 +12,6 @@
 .form-group label { display:block;font-size:0.85rem;font-weight:500;margin-bottom:6px; }
 .form-group input { width:100%;padding:13px 16px;border:1.5px solid rgba(42,74,30,0.15);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;background:var(--crema);transition:border 0.2s; }
 .form-group input:focus { border-color:var(--verde);background:white; }
-.pw-wrap { position:relative; }
-.pw-wrap input { padding-right:44px; }
-.pw-toggle { position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1rem;color:var(--gris); }
 .btn-submit { width:100%;background:var(--verde);color:white;border:none;cursor:pointer;padding:14px;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:500;transition:all 0.2s;margin-top:0.5rem; }
 .btn-submit:hover { background:var(--verde-claro);transform:translateY(-2px);box-shadow:0 8px 24px rgba(42,74,30,0.2); }
 .alert-error { background:#f8d7da;color:#721c24;border:1px solid #f5c6cb;padding:12px 16px;border-radius:10px;font-size:0.875rem;margin-bottom:1.5rem;text-align:center; }
@@ -28,59 +25,33 @@
     .auth-card { padding:2rem 1.5rem;border-radius:20px; }
     .auth-card h1 { font-size:1.7rem; }
 }
-@media(max-width:360px){
-    .auth-wrap { padding:1.5rem 3%; }
-    .auth-card { padding:1.75rem 1.25rem;border-radius:16px; }
-    .auth-card h1 { font-size:1.5rem; }
-    .btn-submit { font-size:0.9rem; }
-}
 </style>
 @endpush
 
 @section('content')
 <div class="auth-wrap">
     <div class="auth-card">
-        <div class="auth-icon">🌸</div>
-        <h1>Bienvenida de vuelta</h1>
-        <p class="sub">Ingresa con tu cuenta de suscriptora o como administradora</p>
+        <div class="auth-icon">🔑</div>
+        <h1>Recuperar contraseña</h1>
+        <p class="sub">Ingresá tu correo y te enviaremos un enlace para crear una contraseña nueva.</p>
 
         @if($errors->any())
         <div class="alert-error">{{ $errors->first() }}</div>
         @endif
 
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('password.email') }}">
             @csrf
             <div class="form-group">
                 <label>Correo electrónico</label>
                 <input type="email" name="email" placeholder="tucorreo@ejemplo.com" value="{{ old('email') }}" required autofocus>
             </div>
-            <div class="form-group">
-                <label>Contraseña</label>
-                <div class="pw-wrap">
-                    <input type="password" name="password" id="pw" placeholder="••••••••" required>
-                    <button type="button" class="pw-toggle" onclick="togglePw()">👁️</button>
-                </div>
-            </div>
-            <button type="submit" class="btn-submit">Iniciar sesión →</button>
+            <button type="submit" class="btn-submit">Enviar enlace →</button>
         </form>
 
         <hr class="divider">
         <div class="auth-links">
-            <a href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
-            <a href="{{ route('registro') }}" class="main-link">🌺 ¿No tenés cuenta? Regístrate gratis</a>
-            <a href="{{ route('home') }}">← Volver a la tienda</a>
+            <a href="{{ route('login') }}" class="main-link">← Volver a iniciar sesión</a>
         </div>
     </div>
 </div>
 @endsection
-
-@push('js')
-<script>
-function togglePw() {
-    const inp = document.getElementById('pw');
-    const btn = inp.nextElementSibling;
-    inp.type = inp.type === 'password' ? 'text' : 'password';
-    btn.textContent = inp.type === 'password' ? '👁️' : '🙈';
-}
-</script>
-@endpush

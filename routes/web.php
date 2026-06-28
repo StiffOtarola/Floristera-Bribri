@@ -42,6 +42,12 @@ Route::post('/login',   [AuthController::class, 'login'])->middleware('throttle:
 // throttle: máximo 10 registros por minuto por IP
 Route::post('/registro',[AuthController::class, 'registro'])->middleware('throttle:10,1');
 
+// ── Recuperar contraseña (clientes) ──────────────────────
+Route::get('/recuperar',          [AuthController::class, 'recuperarForm'])->name('password.request');
+Route::post('/recuperar',         [AuthController::class, 'enviarReset'])->middleware('throttle:5,1')->name('password.email');
+Route::get('/restablecer/{token}',[AuthController::class, 'restablecerForm'])->name('password.reset');
+Route::post('/restablecer',       [AuthController::class, 'restablecer'])->middleware('throttle:5,1')->name('password.update');
+
 // Logout seguro con POST (evita CSRF logout)
 Route::post('/logout',       [AuthController::class, 'logout'])->name('logout');
 Route::post('/logout-admin', [AuthController::class, 'logoutAdmin'])->name('logout.admin');
@@ -58,6 +64,7 @@ Route::prefix('mi-cuenta')->middleware('auth')->group(function () {
     Route::get('/perfil',           [CuentaController::class, 'perfil'])->name('cuenta.perfil');
     Route::put('/perfil',           [CuentaController::class, 'actualizarPerfil'])->name('cuenta.perfil.update');
     Route::put('/password',         [CuentaController::class, 'actualizarPassword'])->name('cuenta.password.update');
+    Route::put('/newsletter',       [CuentaController::class, 'actualizarNewsletter'])->name('cuenta.newsletter.update');
 });
 
 // ══════════════════════════════════════════════════════════
