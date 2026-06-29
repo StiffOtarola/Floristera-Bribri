@@ -126,6 +126,25 @@
         <li><a href="{{ route('cuenta.index') }}">Mi cuenta</a></li>
         @endif
 
+        {{-- Acciones de cuenta (solo dentro del menú móvil) --}}
+        <li class="nav-auth-mobile">
+            @if($adminLogueado)
+                <a href="{{ route('admin.dashboard') }}" class="nav-menu-btn">⚙️ Panel admin</a>
+                <form method="POST" action="{{ route('logout.admin') }}">
+                    @csrf
+                    <button type="submit" class="nav-menu-btn ghost">Cerrar sesión</button>
+                </form>
+            @elseif($userLogueado)
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="nav-menu-btn ghost">Cerrar sesión</button>
+                </form>
+            @else
+                <a href="{{ route('registro') }}" class="nav-menu-btn">🌸 Suscribirme</a>
+                <a href="{{ route('login') }}" class="nav-menu-btn ghost">👤 Iniciar sesión</a>
+            @endif
+        </li>
+
         {{-- Redes sociales en menú móvil (solo visibles cuando el menú está abierto) --}}
         @if($hayRedes)
         <li style="padding-top:0.75rem;border-top:1px solid rgba(42,74,30,0.08);margin-top:0.5rem;display:none;" class="nav-redes-mobile">
@@ -165,6 +184,7 @@
     {{-- Botones de acción --}}
     <div style="display:flex;align-items:center;gap:0.75rem;">
 
+        <div class="nav-auth-desktop">
         @if($adminLogueado)
             <a href="{{ route('admin.dashboard') }}" class="nav-btn-admin">⚙️ Admin</a>
             <form method="POST" action="{{ route('logout.admin') }}" style="display:inline;">
@@ -185,6 +205,7 @@
             <a href="{{ route('registro') }}" class="nav-btn-outline">🌸 Suscribirme</a>
             <a href="{{ route('login') }}" class="nav-btn-ghost">👤 Iniciar sesión</a>
         @endif
+        </div>
 
         {{-- Carrito (siempre visible) --}}
         <a href="{{ route('carrito') }}" class="nav-cart">
@@ -209,8 +230,35 @@
 
 {{-- Mostrar redes en menú móvil cuando se abre --}}
 <style>
-@media(max-width:900px) {
-    .nav-redes-mobile { display: block !important; }
-    .nav-username { display: none; }
-}
+    /* Acciones de cuenta: barra en escritorio, dentro del menú en móvil */
+    .nav-auth-desktop { display: flex; align-items: center; gap: 0.75rem; }
+    .nav-auth-mobile  { display: none; }
+    .nav-auth-mobile form { margin: 0; }
+    .nav-menu-btn {
+        display: block; width: 100%; text-align: center;
+        padding: 13px 16px; border-radius: 100px;
+        font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500;
+        text-decoration: none; cursor: pointer; border: none;
+        background: var(--verde); color: #fff; margin-top: 0.6rem;
+        transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-menu-btn:hover { background: var(--verde-claro); }
+    .nav-menu-btn.ghost { background: none; border: 1.5px solid rgba(42,74,30,0.25); color: var(--verde); }
+    .nav-menu-btn.ghost:hover { border-color: var(--verde); background: none; }
+
+    /* Logo en una sola línea, sin partirse */
+    .nav-logo-text { white-space: nowrap; }
+
+    @media(max-width:900px) {
+        .nav-redes-mobile { display: block !important; }
+        .nav-username     { display: none; }
+        .nav-auth-desktop { display: none; }
+        .nav-auth-mobile  { display: block; }
+        .hamburger        { padding: 10px 6px; }   /* toque cómodo (>=44px) */
+        .nav-logo-text    { font-size: 1.25rem; }
+        .nav-logo-img     { height: 38px; }
+    }
+    @media(max-width:380px) {
+        .nav-logo-text { font-size: 1.05rem; }
+    }
 </style>
